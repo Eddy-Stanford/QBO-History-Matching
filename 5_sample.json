@@ -1,0 +1,27 @@
+{
+    "name": "5_sample_exp",
+    "verbose": true,
+    "waves": 10,
+    "nruns_per_wave": 5,
+    "time_to_run": 40,
+    "spinup":20,
+    "random_state":42,
+    "significance_level":0.01,
+    "sample_space": {
+        "cwtropics": {
+            "min": 5,
+            "max": 80
+        },
+        "Bt_eq": {
+            "min": 0.001,
+            "max": 0.007
+        }
+    },
+    "hotstart":{
+        "start":1, 
+        "overrides":{
+            "time_to_run":22,
+            "spinup":2
+        }
+    }
+}
