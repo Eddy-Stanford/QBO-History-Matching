@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
         # Dispatch task 
         # This calls sbatch so completes synchronously 
-        proc = subprocess.run(['sbatch','model_run.sh',args.n_years,'--chdir',run_dir]) 
+        proc = subprocess.run(['sbatch','model_run.sh',str(args.n_years),'--chdir',run_dir]) 
         run_id[run] = get_job_number(proc.stdout.decode())
     
     with open(os.path.join(BASE_DIR,'paramlist.csv'),'w',newline='\n') as f:
