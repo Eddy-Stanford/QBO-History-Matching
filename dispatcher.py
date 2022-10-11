@@ -52,8 +52,6 @@ if __name__ == '__main__':
     Bt = CURRENT_BT*np.random.lognormal(size=(args.n_runs,))
     cw = CURRENT_CW*np.random.lognormal(size=(args.n_runs,))
 
-    run_id:List[int] = [0]*args.n_runs
-
     for run in range(args.n_runs):
         run_cw = cw[run]
         run_Bt = Bt[run]
@@ -64,11 +62,10 @@ if __name__ == '__main__':
 
         # Dispatch task 
         # This calls sbatch so completes synchronously 
-        proc = subprocess.run(['sbatch','model_run.sh',str(args.n_years),'--chdir',run_dir]) 
-        run_id[run] = get_job_number(proc.stdout.decode())
+        subprocess.run(['sbatch','model_run.sh',str(args.n_years),'--chdir',run_dir]) 
     
     with open(os.path.join(BASE_DIR,'paramlist.csv'),'w',newline='\n') as f:
         paramlist = csv.writer(f, delimiter=',',
                         quotechar='|', quoting=csv.QUOTE_MINIMAL)
         paramlist.writerow(['run_id','Bt','cw'])
-        paramlist.writerows([[str(run_id[i]),str(Bt[i]),str(cw[i])] for i in range(args.n_runs)])
+        paramlist.writerows([[i,str(Bt[i]),str(cw[i])] for i in range(args.n_runs)])
