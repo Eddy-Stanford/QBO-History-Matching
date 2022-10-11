@@ -15,8 +15,8 @@ if 'SLURM_JOBID' not in os.environ:
 CURRENT_CW = 35
 CURRENT_BT= 0.0043
 
-HOME_EXECUTABLE = Path.home()/'MiMa'/'bin'/'exec.SH03_CEES'/'mima.x'
-INPUT_FILES = Path.home()/'MiMa'/'input'
+HOME_EXECUTABLE = Path.home()/'MiMA'/'exp'/'exec.SH03_CEES'/'mima.x'
+INPUT_FILES = Path.home()/'MiMA'/'input'
 BASE_DIR = os.path.expandvars('$SCRATCH/uncert_quant/$SLURM_JOBID')
 
 def positive_int(val):
