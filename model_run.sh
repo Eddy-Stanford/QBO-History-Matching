@@ -7,7 +7,7 @@
 #SBATCH --partition=serc
 #SBATCH --output=./stdout
 #SBATCH --error=./stderr
-iterations=$2
+iterations=$1
 
 echo "Running for " $iterations " years"
 ulimit -s unlimited

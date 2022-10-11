@@ -26,7 +26,7 @@ def positive_int(val):
     return val
 
 def create_run_dirs(run_id:int)->str:
-    run_dir =os.path.join(BASE_DIR,run_id)
+    run_dir =os.path.join(BASE_DIR,str(run_id))
     os.makedirs(run_dir)
     ## Copy Executable
     shutil.copyfile(HOME_EXECUTABLE,'mima.x')
