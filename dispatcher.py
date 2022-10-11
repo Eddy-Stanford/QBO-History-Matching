@@ -29,9 +29,9 @@ def create_run_dirs(run_id:int)->str:
     run_dir =os.path.join(BASE_DIR,str(run_id))
     os.makedirs(run_dir)
     ## Copy Executable
-    shutil.copyfile(HOME_EXECUTABLE,os.path.join('mima.x'))
+    shutil.copyfile(HOME_EXECUTABLE,os.path.join(run_dir,'mima.x'))
     ## Copy Input files
-    shutil.copytree(INPUT_FILES,os.path.join(run_dir,'*'))
+    shutil.copytree(INPUT_FILES,os.path.join(run_dir),dirs_exist=True)
     ## Make RESTART dir
     os.makedirs(os.path.join(run_dir,'RESTART'))
     return run_dir
@@ -71,4 +71,4 @@ if __name__ == '__main__':
         paramlist = csv.writer(f, delimiter=',',
                         quotechar='|', quoting=csv.QUOTE_MINIMAL)
         paramlist.writerow(['run_id','Bt','cw'])
-        paramlist.writerows([[run_id[i],Bt[i],cw[i]] for i in range(args.n_runs)])
+        paramlist.writerows([[str(run_id[i]),str(Bt[i]),str(cw[i])] for i in range(args.n_runs)])
