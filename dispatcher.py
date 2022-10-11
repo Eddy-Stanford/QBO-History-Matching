@@ -52,7 +52,7 @@ if __name__ == '__main__':
     Bt = CURRENT_BT*np.random.lognormal(size=(args.n_runs,))
     cw = CURRENT_CW*np.random.lognormal(size=(args.n_runs,))
 
-    run_id:List[int] = [0]*range(args.n_runs)
+    run_id:List[int] = [0]*args.n_runs
     os.chdir(BASE_DIR)
 
     for run in range(args.n_runs):
