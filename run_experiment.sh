@@ -12,6 +12,6 @@ python3 -m venv $SCRATCH/uncert_quant/$SLURM_JOBID/env
 source $SCRATCH/uncert_quant/$SLURM_JOBID/env/bin/activate
 python3 -m pip install -r requirements.txt
 # Run dispatcher
-python dispatcher.py "$@" > $SCRATCH/uncert_quant/$SLURM_JOBID/dispatcher.out
+python dispatcher.py "$@"
 deactivate 
 rm -rf $SCRATCH/uncert_quant/$SLURM_JOBID/env
