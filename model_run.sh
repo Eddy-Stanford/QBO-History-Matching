@@ -2,11 +2,9 @@
 #SBATCH --job-name=modelrun_uncert
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=32
-#SBATCH --time=20:00:00
+#SBATCH --time=10:00:00
 #SBATCH --mem=64G
 #SBATCH --partition=serc
-#SBATCH --output=./stdout
-#SBATCH --error=./stderr
 iterations=$1
 
 echo "Running for " $iterations " years"

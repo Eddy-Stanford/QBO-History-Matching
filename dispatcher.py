@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
         # Dispatch task 
         # This calls sbatch so completes synchronously 
-        subprocess.run(['sbatch','model_run.sh',str(args.n_years),'--chdir',run_dir]) 
+        subprocess.run(['sbatch','model_run.sh',str(args.n_years),'--chdir',run_dir,'-o',os.path.join(run_dir,'output'),'-e',os.path.join(run_dir,'error')]) 
     
     with open(os.path.join(BASE_DIR,'paramlist.csv'),'w',newline='\n') as f:
         paramlist = csv.writer(f, delimiter=',',
