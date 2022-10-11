@@ -33,7 +33,7 @@ export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${LIBFABRIC_PATH}:${HWLOC_PATH}"
 
 N_PROCS=32
 PLATFORM=SH03_CEES
-CCOMB=${HOME}/MiMA/bin/mppncombine.${PLATFORM}
+CCOMB=${HOME}/MiMA/bin/mppnccombine.${PLATFORM}
 for ((i=1;i<=$iterations;i++))
 do 
     echo "Running year " $i
