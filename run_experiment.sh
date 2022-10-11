@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=uncertquantdispatcher
+#SBATCH --job-name=dispatch_uncert
 #SBATCH --nodes=1
 #SBATCH --time=01:00:00
 #SBATCH --mem=1G

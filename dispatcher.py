@@ -31,7 +31,7 @@ def create_run_dirs(run_id:int)->str:
     ## Copy Executable
     shutil.copyfile(HOME_EXECUTABLE,os.path.join(run_dir,'mima.x'))
     ## Copy Input files
-    shutil.copytree(INPUT_FILES,os.path.join(run_dir),dirs_exist=True)
+    shutil.copytree(INPUT_FILES,os.path.join(run_dir),dirs_exist_ok=True)
     ## Make RESTART dir
     os.makedirs(os.path.join(run_dir,'RESTART'))
     return run_dir
