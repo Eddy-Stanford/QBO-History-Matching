@@ -43,6 +43,8 @@ def get_job_number(stdout:str)->int:
 parser = argparse.ArgumentParser(description='Run Uncertanity Quantification experiments')
 parser.add_argument('n_years',default=20,type=positive_int)
 parser.add_argument('n_runs',default=20,type=positive_int)
+parser.add_argument('--seed',default=None,type=int)
+parser.add_argument('--rng-offset',default=0,type=int)
 
 
 
@@ -52,7 +54,7 @@ if __name__ == '__main__':
     template_env = jinja2.Environment(loader=template_loader)
     template = template_env.get_template('input.nml.template')
 
-    samples = lhs(2,samples=args.n_years,criterion='c')
+    samples = lhs(2,samples=args.n_years) 
     samples = np.column_stack((samples,np.ones((args.n_years,))))
     rescale = np.array([[65,0],[0,0.006],[5,0.001]])
     samples = (samples @ rescale)
