@@ -1,2 +1,4 @@
 numpy==1.23.1
 jinja2==3.0.3
+scipy==1.9.2
+pyDOE==0.3.8

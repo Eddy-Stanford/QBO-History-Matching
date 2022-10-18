@@ -8,6 +8,7 @@ import re
 import shutil
 import csv
 from pathlib import Path
+from pyDOE import lhs
 
 if 'SLURM_JOBID' not in os.environ:
     raise RuntimeError("This script can only be accessed from a SLURM job")
@@ -40,8 +41,10 @@ def get_job_number(stdout:str)->int:
     return int(re.match(r'[a-zA-Z]*([0-9]+)',stdout).group(1))
 
 parser = argparse.ArgumentParser(description='Run Uncertanity Quantification experiments')
-parser.add_argument('n_years',default=10,type=positive_int)
-parser.add_argument('n_runs',default=10,type=positive_int)
+parser.add_argument('n_years',default=20,type=positive_int)
+parser.add_argument('n_runs',default=20,type=positive_int)
+
+
 
 if __name__ == '__main__':
     args = parser.parse_args()
@@ -49,12 +52,15 @@ if __name__ == '__main__':
     template_env = jinja2.Environment(loader=template_loader)
     template = template_env.get_template('input.nml.template')
 
-    Bt = CURRENT_BT*np.random.lognormal(size=(args.n_runs,))
-    cw = CURRENT_CW*np.random.lognormal(size=(args.n_runs,))
+    samples = lhs(2,samples=args.n_years,criterion='c')
+    samples = np.column_stack(samples,np.ones((args.n_years,)))
+    rescale = np.array([[65,0],[0,0.006],[5,0.001]])
+    samples = (samples @ rescale)
+
 
     for run in range(args.n_runs):
-        run_cw = cw[run]
-        run_Bt = Bt[run]
+        run_cw = samples[run,0]
+        run_Bt = samples[run,1]
         run_dir = create_run_dirs(run)
 
         with open(os.path.join(run_dir,'input.nml'),'w') as input_namefile:
@@ -73,4 +79,4 @@ if __name__ == '__main__':
         paramlist = csv.writer(f, delimiter=',',
                         quotechar='|', quoting=csv.QUOTE_MINIMAL)
         paramlist.writerow(['run_id','Bt','cw'])
-        paramlist.writerows([[i,str(Bt[i]),str(cw[i])] for i in range(args.n_runs)])
+        paramlist.writerows([[i,str(samples[i,0]),str(samples[i,1])] for i in range(args.n_runs)])
