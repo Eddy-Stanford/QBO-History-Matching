@@ -1,11 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=modelrun_uncert
 #SBATCH --nodes=1
-#SBATCH --tasks-per-node=32
-#SBATCH --time=10:00:00
-#SBATCH --mem=64G
+#SBATCH --cpus-per-task=16
+#SBATCH --time=24:00:00
+#SBATCH --mem=32G
 #SBATCH --partition=serc
+#SBATCH --array=0-99%10
+#SBATCH --output=%a.log
 iterations=$1
+cd $SLURM_ARRAY_TASK_ID
 
 echo "Running for " $iterations " years"
 ulimit -s unlimited

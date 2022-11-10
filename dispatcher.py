@@ -67,18 +67,15 @@ if __name__ == '__main__':
 
         with open(os.path.join(run_dir,'input.nml'),'w') as input_namefile:
             input_namefile.write(template.render(cw=run_cw,Bt_eq=run_Bt))
-
-        # Dispatch task 
-        # This calls sbatch so completes synchronously 
-        subprocess.run(['sbatch',
-        '--chdir',run_dir,
-        '-o',os.path.join(run_dir,'output'),
-        '-e',os.path.join(run_dir,'error'),
-        'model_run.sh'
-        ,str(args.n_years)]) 
     
     with open(os.path.join(BASE_DIR,'paramlist.csv'),'w',newline='\n') as f:
         paramlist = csv.writer(f, delimiter=',',
                         quotechar='|', quoting=csv.QUOTE_MINIMAL)
         paramlist.writerow(['run_id','Bt','cw'])
         paramlist.writerows([[i,str(samples[i,0]),str(samples[i,1])] for i in range(args.n_runs)])
+
+    subprocess.run(['sbatch',
+    '--chdir',BASE_DIR,
+    'model_run.sh'
+    ,str(args.n_years),
+    ]) 
