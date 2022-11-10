@@ -5,7 +5,7 @@
 #SBATCH --time=24:00:00
 #SBATCH --mem=32G
 #SBATCH --partition=serc
-#SBATCH --array=0-99%10
+#SBATCH --array=0-99%20
 #SBATCH --output=%a.log
 iterations=$1
 cd $SLURM_ARRAY_TASK_ID

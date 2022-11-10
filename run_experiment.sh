@@ -4,7 +4,7 @@
 #SBATCH --time=01:00:00
 #SBATCH --mem=1G
 #SBATCH --partition=serc
-
+experiment_name=$S1
 # Create run directory
 mkdir $SCRATCH/uncert_quant/$SLURM_JOBID
 module load python/3.9.0
