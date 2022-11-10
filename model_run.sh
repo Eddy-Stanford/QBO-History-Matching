@@ -34,7 +34,7 @@ export HWLOC_PATH="/home/groups/s-ees/share/cees/spack_cees/spack/opt/spack/linu
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${LIBFABRIC_PATH}:${HWLOC_PATH}"
 
 
-N_PROCS=32
+N_PROCS=16
 PLATFORM=SH03_CEES
 CCOMB=${HOME}/MiMA/bin/mppnccombine.${PLATFORM}
 for ((i=1;i<=$iterations;i++))
