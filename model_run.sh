@@ -2,7 +2,7 @@
 #SBATCH --job-name=modelrun_uncert
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=16
-#SBATCH --time=24:00:00
+#SBATCH --time=30:00:00
 #SBATCH --mem=32G
 #SBATCH --partition=serc
 #SBATCH --array=0-99%20
