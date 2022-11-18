@@ -23,7 +23,7 @@ if __name__ == '__main__':
         'sbatch',
         '--chdir',args.in_dir,
         '--array',','.join(reruns) + '%20',
-        'model_run.sh',
+        'model_rerun.sh',
         args.restart_from,
         args.restart_to,
     ])
