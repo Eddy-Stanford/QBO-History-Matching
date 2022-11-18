@@ -6,8 +6,15 @@
 #SBATCH --mem=32G
 #SBATCH --partition=serc
 #SBATCH --output=%a.log
-iterations=$1
+restart_from=$1
+restart_to=$2
 cd $SLURM_ARRAY_TASK_ID
+
+## COPY restart files
+cp restart_history/restart_${restart_from}/* INPUT/
+
+iterations=$((${restart_to} - ${restart_from}))
+
 
 echo "Running for " $iterations " years"
 ulimit -s unlimited
@@ -36,7 +43,7 @@ export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${LIBFABRIC_PATH}:${HWLOC_PATH}"
 N_PROCS=16
 PLATFORM=SH03_CEES
 CCOMB=${HOME}/MiMA/bin/mppnccombine.${PLATFORM}
-for ((i=1;i<=$iterations;i++))
+for ((i=$restart_from+1;i<=$restart_to;i++))
 do 
     echo "Running year " $i
     srun --ntasks $N_PROCS mima.x

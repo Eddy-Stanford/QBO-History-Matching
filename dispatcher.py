@@ -76,6 +76,7 @@ if __name__ == '__main__':
 
     subprocess.run(['sbatch',
     '--chdir',BASE_DIR,
+    '--array',f'0-{args.n_runs-1}%20'
     'model_run.sh'
     ,str(args.n_years),
     ]) 
