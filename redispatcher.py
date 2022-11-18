@@ -10,12 +10,11 @@ parser.add_argument('run_to',default=40)
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    os.chdir(args.in_dir)
     reruns = []
-    for run in filter(os.path.isdir,os.listdir()):
-        if os.path.isfile(os.path.join(run,f"atmos_daily_{args.run_to}.nc")):
+    for run in filter(os.path.isdir,os.listdir(args.in_dir)):
+        if os.path.isfile(os.path.join(args.in_dir,run,f"atmos_daily_{args.run_to}.nc")):
             continue
-        if os.path.isdir(os.path.join(run,'restart_history',f'restart_{args.restart_from}')):
+        if os.path.isdir(os.path.join(args.in_dir,run,'restart_history',f'restart_{args.restart_from}')):
             reruns.append(run)
 
     subprocess.run([
