@@ -24,7 +24,7 @@ if __name__ == '__main__':
         '--array',','.join(reruns) + '%20',
         'model_rerun.sh',
         args.restart_from,
-        args.restart_to,
+        args.run_to,
     ])
     ### rollback all to restart_from IF availabel
     
