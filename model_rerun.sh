@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=modelrun_uncert
+#SBATCH --job-name=restartrun
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=16
 #SBATCH --time=48:00:00
@@ -11,6 +11,7 @@ restart_to=$2
 cd $SLURM_ARRAY_TASK_ID
 
 ## COPY restart files
+echo "Copying restart files"
 cp restart_history/restart_${restart_from}/* INPUT/
 
 iterations=$((${restart_to} - ${restart_from}))

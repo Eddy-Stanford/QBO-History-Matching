@@ -16,11 +16,11 @@ if __name__ == '__main__':
             continue
         if os.path.isdir(os.path.join(args.in_dir,run,'restart_history',f'restart_{args.restart_from}')):
             reruns.append(run)
-
+    print(f"Submitting restart files for: {reruns}" )
     subprocess.run([
         'sbatch',
         '--chdir',args.in_dir,
-        '--array',','.join(reruns) + '%20',
+        '--array=' + ','.join(reruns) + '%20',
         'model_rerun.sh',
         args.restart_from,
         args.run_to,
