@@ -14,6 +14,6 @@ python3 -m venv $DIRECTORY/env
 source $DIRECTORY/env/bin/activate
 python3 -m pip install -r requirements.txt
 # Run dispatcher
-python dispatcher.py $DIRECTORY $RESTART_FROM $RESTART_TO
+python redispatcher.py $DIRECTORY $RESTART_FROM $RESTART_TO
 deactivate 
 rm -rf $DIRECTORY/env
