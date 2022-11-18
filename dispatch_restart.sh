@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=dispatch_restart
+#SBATCH --job-name=rerun
 #SBATCH --nodes=1
 #SBATCH --time=01:00:00
 #SBATCH --mem=1G
 #SBATCH --partition=serc
-DIRECTORY = $1
+DIRECTORY=$1
 RESTART_FROM=$2
 RESTART_TO=$3
 # Create run directory
