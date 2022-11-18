@@ -1,7 +1,6 @@
 import os
 import subprocess
 import argparse
-from glob import iglob 
 # Dispatch a set of tasks for incomplete log files. 
 
 parser = argparse.ArgumentParser(description='Restart runs that are incomplete and run until reach intended deadline.')
