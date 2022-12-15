@@ -20,6 +20,7 @@ then
     rm atmos*.nc
     rm atmos*.nc.*
     rm time_stamp.out
+    rm logfile*
 else  
     cp restart_history/restart_${restart_from}/* INPUT/
 fi
