@@ -12,7 +12,15 @@ cd $SLURM_ARRAY_TASK_ID
 
 ## COPY restart files
 echo "Copying restart files"
-cp restart_history/restart_${restart_from}/* INPUT/
+if [[ $restart_from -eq 0 ]]
+then
+    echo "Performing full clean"
+    cp ~/MiMa/input/INPUT INPUT/
+    rm -rf restart_history
+    rm atmos*.nc
+else  
+    cp restart_history/restart_${restart_from}/* INPUT/
+fi
 
 iterations=$((${restart_to} - ${restart_from}))
 
