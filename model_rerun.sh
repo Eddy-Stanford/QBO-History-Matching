@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=restartrun
+#SBATCH --job-name=rerunner
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=16
 #SBATCH --time=48:00:00
