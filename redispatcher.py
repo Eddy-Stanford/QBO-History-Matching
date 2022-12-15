@@ -26,5 +26,5 @@ if __name__ == '__main__':
             args.restart_from,
             args.run_to,
         ])
-    ### rollback all to restart_from IF availabel
+    ### rollback all to restart_from if available
     
