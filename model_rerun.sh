@@ -16,7 +16,7 @@ if [[ $restart_from -eq 0 ]]
 then
     echo "Performing full clean"
     rm -rf INPUT/
-    cp -r $HOME/MiMa/input/INPUT ./
+    cp -r $HOME/MiMA/input/INPUT ./
     rm -rf restart_history
     rm atmos*.nc
     rm atmos*.nc.*
