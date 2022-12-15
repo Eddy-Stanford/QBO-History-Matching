@@ -18,6 +18,8 @@ then
     cp ~/MiMa/input/INPUT INPUT/
     rm -rf restart_history
     rm atmos*.nc
+    rm atmos*.nc.*
+    rm time_stamp.out
 else  
     cp restart_history/restart_${restart_from}/* INPUT/
 fi
