@@ -15,6 +15,7 @@ echo "Copying restart files"
 if [[ $restart_from -eq 0 ]]
 then
     echo "Performing full clean"
+    rm -rf INPUT/
     cp ~/MiMa/input/INPUT INPUT/
     rm -rf restart_history
     rm atmos*.nc
