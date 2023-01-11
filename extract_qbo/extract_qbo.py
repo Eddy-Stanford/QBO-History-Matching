@@ -1,20 +1,31 @@
 #! /usr/bin/env python
-import sys
 import xarray
+import argparse
 import os
-wd = sys.argv[1]
-year_from = int(sys.argv[2])
-year_to = int(sys.argv[3])
-ds = None
-os.chdir(wd)
 
-for i in range(year_from,year_to):
-	dsf = xarray.open_dataset(f"atmos_daily_{i}.nc",decode_times=False)
-	if ds is None:
-		ds = dsf.ucomp
-	else:
-		ds = xarray.concat((ds,dsf.ucomp),dim='time')
-	dsf.close()
-qbo = ds.sel(lat=slice(-10.0,10.0),).mean(dim=['lat','lon'])
-qbo.to_netcdf(f"qbo_{year_from}_{year_to}.nc")
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description="Combine multiple atmos daily files into QBO profile")
+	parser.add_argument("wd",type=str)
+	parser.add_argument("year_from",type=int)
+	parser.add_argument("year_to",type=int)
+	parser.add_argument("--output-name",type=str,default=None)
+	parser.add_argument("--latitude_range",default=10,type=float)
+
+	args = parser.parse_args()
+
+	if not args.output_name:
+		args.output_name = f"qbo_{args.year_from}_{args.year_to}.nc"
+	ds = None
+
+	os.chdir(args.wd)
+
+	for i in range(args.year_from,args.year_to):
+		dsf = xarray.open_dataset(f"atmos_daily_{i}.nc",decode_times=False)
+		if ds is None:
+			ds = dsf.ucomp
+		else:
+			ds = xarray.concat((ds,dsf.ucomp),dim='time')
+		dsf.close()
+	qbo = ds.sel(lat=slice(-args.latitude_range,args.latitude_range),).mean(dim=['lat','lon'])
+	qbo.to_netcdf(args.output_names)
 
