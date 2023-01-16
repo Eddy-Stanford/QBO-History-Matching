@@ -27,5 +27,5 @@ if __name__ == '__main__':
 			ds = xarray.concat((ds,dsf.ucomp),dim='time')
 		dsf.close()
 	qbo = ds.sel(lat=slice(-args.latitude_range,args.latitude_range),).mean(dim=['lat','lon'])
-	qbo.to_netcdf(args.output_names)
+	qbo.to_netcdf(args.output_name)
 
