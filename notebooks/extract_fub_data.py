@@ -42,17 +42,18 @@ class FUBDataFile:
                 if k == "YYMM":
                     self.struct[k].append("19"+var if int(var[:2]) >= 53 else "20" + var)
                 else:
-                    self.struct[k].append( int(var) if var else None)
+                    self.struct[k].append(int(var) if var else None)
                 j+= length + 1
         return self
 
     def to_numpy(self):
         """Provides only the raw data without station or year in a 2d numpy array"""
-        return np.transpose(np.array([np.array(self.struct[k],dtype=np.float) for k in self.__NUMERIC]))
+        return 0.1*np.transpose(np.array([np.array(self.struct[k],dtype=np.float) for k in self.__NUMERIC]))
 
     def to_pandas(self):
         df = pd.DataFrame.from_dict(self.struct)
         df["YYMM"] = pd.to_datetime(df["YYMM"],format="%Y%m")
+        df[self.__NUMERIC] = df[self.__NUMERIC]*0.1
         df = df.rename({"IIII":"Station","YYMM":"Date of Observation"})
         return df
 
