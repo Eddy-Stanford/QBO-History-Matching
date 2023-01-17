@@ -2,6 +2,7 @@
 import xarray
 import argparse
 import os
+import numpy as np
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="Combine multiple atmos daily files into QBO profile")
@@ -9,7 +10,7 @@ if __name__ == '__main__':
 	parser.add_argument("year_from",type=int)
 	parser.add_argument("year_to",type=int)
 	parser.add_argument("--output-name",type=str,default=None)
-	parser.add_argument("--latitude_range",default=10,type=float)
+	parser.add_argument("--latitude_range",default=5,type=float)
 
 	args = parser.parse_args()
 
@@ -26,6 +27,8 @@ if __name__ == '__main__':
 		else:
 			ds = xarray.concat((ds,dsf.ucomp),dim='time')
 		dsf.close()
-	qbo = ds.sel(lat=slice(-args.latitude_range,args.latitude_range),).mean(dim=['lat','lon'])
+	ds = ds.sel(lat=slice(-args.latitude_range,args.latitude_range),)
+	weights = np.cos(np.deg2rad(ds.lat))
+	qbo = ds.weighted(weights).mean(dim=['lat','lon'])
 	qbo.to_netcdf(args.output_name)
 
