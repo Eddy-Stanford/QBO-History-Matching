@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     samples = lhs(2,samples=args.n_runs) 
     samples = np.column_stack((samples,np.ones((args.n_runs,))))
-    rescale = np.array([[65,0],[0,0.006],[5,0.001]])
+    rescale = np.array([[60,0],[0,0.005],[5,0.001]])
     samples = (samples @ rescale)
 
 
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     with open(os.path.join(BASE_DIR,'paramlist.csv'),'w',newline='\n') as f:
         paramlist = csv.writer(f, delimiter=',',
                         quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        paramlist.writerow(['run_id','Bt','cw'])
+        paramlist.writerow(['run_id','cw','Bt'])
         paramlist.writerows([[i,str(samples[i,0]),str(samples[i,1])] for i in range(args.n_runs)])
 
     subprocess.run(['sbatch',
