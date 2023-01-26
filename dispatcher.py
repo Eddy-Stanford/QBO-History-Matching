@@ -59,7 +59,6 @@ if __name__ == '__main__':
     rescale = np.array([[60,0],[0,0.005],[5,0.001]])
     samples = (samples @ rescale)
 
-
     for run in range(args.n_runs):
         run_cw = samples[run,0]
         run_Bt = samples[run,1]
