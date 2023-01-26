@@ -33,7 +33,7 @@ def get_qbo_amplitude(data,transitions):
     return np.mean(amplitudes),np.std(amplitudes)
 
 def rolling_average(data,n):
-    return np.convolve(data,np.ones(n),mode='valid')/n
+    return np.convolve(data,np.ones(n),mode='same')/n
 
 if __name__ == '__main__':
     df = pd.read_csv(os.path.join(DATADIR,'paramlist.csv'),index_col='run_id')
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     for i in range(100):
         with xr.open_dataset(os.path.join(DATADIR,f"{i}_QBO_20_40.nc")) as ds:
             raw_data =ds.ucomp.sel(pfull=10,method='nearest')
-            t = np.arange(FIVE_MONTHS/2,len(raw_data.values)-FIVE_MONTHS/2 + 1)
+            t = np.arange(len(raw_data.values))
             smoothed = rolling_average(raw_data,FIVE_MONTHS)
             mean,std,n,roots = get_qbo_period_transitions(smoothed,t)
             transition_indexs = np.round(roots).astype(int) 
