@@ -11,7 +11,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     base = dispatch_utils.get_base_dir(args.exp_name)
     template = dispatch_utils.get_template()
-    samples:pd.DataFrame = pd.read_csv(args.parameters)
+    samples:pd.DataFrame = pd.read_csv(args.parameters,index_col=0)
     for run,series in samples.iterrows():
         run_dir = dispatch_utils.create_run_dirs(base,run)
         dispatch_utils.write_namefile(run_dir,template,**series.to_dict())
