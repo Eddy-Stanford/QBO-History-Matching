@@ -7,7 +7,8 @@
 #SBATCH --partition=serc
 #SBATCH --output=%a.log
 iterations=$1
-cd $SLURM_ARRAY_TASK_ID
+printf -v idx "%02d" $SLURM_ARRAY_TASK_ID
+cd $idx
 
 echo "Running for " $iterations " years"
 ulimit -s unlimited

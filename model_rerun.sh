@@ -8,7 +8,8 @@
 #SBATCH --output=%a.log
 restart_from=$1
 restart_to=$2
-cd $SLURM_ARRAY_TASK_ID
+printf -v idx "%02d" $SLURM_ARRAY_TASK_ID
+cd $idx
 
 ## COPY restart files
 echo "Copying restart files"
