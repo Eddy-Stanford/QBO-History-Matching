@@ -24,6 +24,6 @@ python3 -m venv $SCRATCH/uncert_quant/$expname/env
 source $SCRATCH/uncert_quant/$expname/env/bin/activate
 python3 -m pip install -r requirements.txt
 # Run dispatcher
-python dispatcher_presample.py "$@"
+python dispatch_presample.py "$@"
 deactivate 
 rm -rf $SCRATCH/uncert_quant/$expname/env
