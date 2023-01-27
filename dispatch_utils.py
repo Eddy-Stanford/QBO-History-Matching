@@ -19,9 +19,9 @@ INPUT_FILES = Path.home()/'MiMA'/'input'
 def model_run(basedir,nruns,t,concurrency=20):
     return subprocess.run(['sbatch',
         '--chdir',basedir,
-        '--array',f'0-{nruns-1}%{concurrency}'
-        'model_run.sh'
-        ,str(t),
+        '--array',f'0-{nruns-1}%{concurrency}',
+        'model_run.sh',
+        str(t),
     ]) 
 
 
