@@ -18,7 +18,12 @@ CURRENT_BT= 0.0043
 
 HOME_EXECUTABLE = Path.home()/'MiMA'/'exp'/'exec.SH03_CEES'/'mima.x'
 INPUT_FILES = Path.home()/'MiMA'/'input'
-BASE_DIR = os.path.expandvars('$SCRATCH/uncert_quant/$SLURM_JOBID')
+
+def get_base_dir(expname):
+    if expname:
+        return os.path.expandvars(f'$SCRATCH/uncert_quant/{expname}')
+    else:
+        return os.path.expandvars('$SCRATCH/uncert_quant/$SLURM_JOBID')
 
 def positive_int(val):
     val = int(val)
@@ -26,8 +31,8 @@ def positive_int(val):
         raise argparse.ArgumentTypeError('Value must be positive')
     return val
 
-def create_run_dirs(run_id:int)->str:
-    run_dir =os.path.join(BASE_DIR,str(run_id).zfill(2))
+def create_run_dirs(base:str,run_id:int)->str:
+    run_dir =os.path.join(base,str(run_id).zfill(2))
     os.makedirs(run_dir)
     ## Copy Executable
     shutil.copy(HOME_EXECUTABLE,os.path.join(run_dir,'mima.x'))
@@ -45,11 +50,12 @@ parser.add_argument('n_years',default=20,type=positive_int)
 parser.add_argument('n_runs',default=20,type=positive_int)
 parser.add_argument('--seed',default=None,type=int)
 parser.add_argument('--rng-offset',default=0,type=int)
-
+parser.add_argument('--exp-name',default=None,type=str)
 
 
 if __name__ == '__main__':
     args = parser.parse_args()
+    base = get_base_dir(args.exp_name)
     template_loader = jinja2.FileSystemLoader(searchpath="./")
     template_env = jinja2.Environment(loader=template_loader)
     template = template_env.get_template('input.nml.template')
@@ -62,19 +68,19 @@ if __name__ == '__main__':
     for run in range(args.n_runs):
         run_cw = samples[run,0]
         run_Bt = samples[run,1]
-        run_dir = create_run_dirs(run)
+        run_dir = create_run_dirs(base,run)
 
         with open(os.path.join(run_dir,'input.nml'),'w') as input_namefile:
             input_namefile.write(template.render(cw=run_cw,Bt_eq=run_Bt))
     
-    with open(os.path.join(BASE_DIR,'paramlist.csv'),'w',newline='\n') as f:
+    with open(os.path.join(base,'paramlist.csv'),'w',newline='\n') as f:
         paramlist = csv.writer(f, delimiter=',',
                         quotechar='|', quoting=csv.QUOTE_MINIMAL)
         paramlist.writerow(['run_id','cw','Bt'])
         paramlist.writerows([[i,str(samples[i,0]),str(samples[i,1])] for i in range(args.n_runs)])
 
     subprocess.run(['sbatch',
-    '--chdir',BASE_DIR,
+    '--chdir',base,
     '--array',f'0-{args.n_runs-1}%20'
     'model_run.sh'
     ,str(args.n_years),
