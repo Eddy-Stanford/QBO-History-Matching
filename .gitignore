@@ -4,3 +4,4 @@ __pycache__/**
 *.dat
 *.csv
 *.png
+.vscode
