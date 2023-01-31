@@ -5,7 +5,7 @@ import pandas as pd
 from scipy.interpolate import InterpolatedUnivariateSpline
 from scipy.fft import fft, fftfreq
 
-DATADIR = "data"
+DATADIR = "data/wave2"
 FIVE_MONTHS = 5*30 
 
 def get_qbo_period_fourier(data) -> float:
@@ -36,16 +36,24 @@ def rolling_average(data,n):
     return np.convolve(data,np.ones(n),mode='same')/n
 
 if __name__ == '__main__':
+    FROM = 0
+    TO = 50
+    count = TO-FROM
     df = pd.read_csv(os.path.join(DATADIR,'paramlist.csv'),index_col='run_id')
-    qbo_periods = [0]*100
-    qbo_periods_std = [0]*100
-    qbo_periods_fft = [0]*100
-    qbo_count = [0]*100
-    qbo_amplitude_rmse = [0]*100
-    qbo_amplitude_mean = [0]*100
-    qbo_amplitude_std = [0]*100
-    for i in range(100):
-        with xr.open_dataset(os.path.join(DATADIR,f"{i}_QBO_20_40.nc")) as ds:
+    df = df[FROM:TO]
+    qbo_periods = [None]*count
+    qbo_periods_std = [None]*count
+    qbo_periods_fft = [None]*count
+    qbo_count = [None]*count
+    qbo_amplitude_rmse = [None]*count
+    qbo_amplitude_mean = [None]*count
+    qbo_amplitude_std = [None]*count
+    for i in range(FROM,TO):
+        path = os.path.join(DATADIR,f"{str(i).zfill(2)}_QBO_20_40.nc")
+        if not os.path.exists(path):
+            print("SKIPPING " + path)
+            continue
+        with xr.open_dataset(path) as ds:
             raw_data =ds.ucomp.sel(pfull=10,method='nearest')
             t = np.arange(len(raw_data.values))
             smoothed = rolling_average(raw_data,FIVE_MONTHS)
@@ -71,7 +79,6 @@ if __name__ == '__main__':
     df["qbo_rmse_ampltiude"] = qbo_amplitude_rmse
     df["qbo_amplitude_mean"] = qbo_amplitude_mean
     df["qbo_amplitude_std"] = qbo_amplitude_std
-
-    df.to_csv(os.path.join(DATADIR,"qbo_data.csv"))
+    df.dropna().to_csv(os.path.join(DATADIR,"qbo_data.csv"))
 
 
