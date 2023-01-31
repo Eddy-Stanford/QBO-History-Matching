@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=modelrun_uncert
+#SBATCH --job-name=mimarunforyears
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=16
 #SBATCH --time=48:00:00

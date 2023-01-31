@@ -6,4 +6,5 @@
 #SBATCG --ntasks=4
 source ~/.bashrc
 conda activate
-python extract_qbo.py $1/$SLURM_ARRAY_TASK_ID $2 $3 --output-name "${SLURM_ARRAY_TASK_ID}_QBO_${2}_${3}.nc"
+printf -v idx "%02d" $SLURM_ARRAY_TASK_ID
+python extract_qbo.py $1/$idx $2 $3 --output-name "${SLURM_ARRAY_TASK_ID}_QBO_${2}_${3}.nc"
