@@ -7,4 +7,4 @@
 source ~/.bashrc
 conda activate
 printf -v idx "%02d" $SLURM_ARRAY_TASK_ID
-python extract_qbo.py $1/$idx $2 $3 --output-name "${idx}_QBO_${2}_${3}.nc" --latitude-range=5
+python extract_qbo.py $1/$idx $2 $3 --output-name "${idx}_QBO_${2}_${3}.nc" --latitude_range=5
