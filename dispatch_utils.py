@@ -15,14 +15,26 @@ CURRENT_BT= 0.0043
 HOME_EXECUTABLE = Path.home()/'MiMA'/'exp'/'exec.SH03_CEES'/'mima.x'
 INPUT_FILES = Path.home()/'MiMA'/'input'
 
+def get_jobid_from_stdout(stdout:bytes):
+    stdout_str = stdout.decode()
+    if (m:=re.search(r'[0-9]+',stdout_str)):
+        return int(m[0])
+    else:
+        return None
+
 
 def model_run(basedir,nruns,t,concurrency=20):
-    return subprocess.run(['sbatch',
+    proc_status = subprocess.run(['sbatch',
         '--chdir',basedir,
         '--array',f'0-{nruns-1}%{concurrency}',
         'model_run.sh',
         str(t),
-    ]) 
+    ],capture_output=True) 
+    if proc_status.returncode == 0:
+        jobid = get_jobid_from_stdout(proc_status.stdout)
+        return jobid
+    else:
+        raise RuntimeError("Unable to dispatch model run job")
 
 
 def get_template(name='input.nml.template'):

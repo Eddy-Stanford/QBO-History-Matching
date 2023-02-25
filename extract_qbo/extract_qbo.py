@@ -1,8 +1,24 @@
 #! /usr/bin/env python
-import xarray
+import xarray as xr
 import argparse
 import os
 import numpy as np
+from typing import List
+
+
+def concat_and_weight_qbo(input_files:List[str],latitude_range:float) -> xr.DataArray:
+	ds = None
+	for f in input_files:
+		dsf = xr.open_dataset(f,decode_times=False)
+		if ds is None:
+			ds = dsf.ucomp
+		else:
+			ds = xr.concat((ds,dsf.ucomp),dim='time')
+		dsf.close()
+	ds = ds.sel(lat=slice(-latitude_range,latitude_range),)
+	weights = np.cos(np.deg2rad(ds.lat))
+	return ds.weighted(weights).mean(dim=['lat','lon'])
+	
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="Combine multiple atmos daily files into QBO profile")
@@ -16,19 +32,8 @@ if __name__ == '__main__':
 
 	if not args.output_name:
 		args.output_name = f"qbo_{args.year_from}_{args.year_to}.nc"
-	ds = None
 
-	os.chdir(args.wd)
-
-	for i in range(args.year_from,args.year_to):
-		dsf = xarray.open_dataset(f"atmos_daily_{i}.nc",decode_times=False)
-		if ds is None:
-			ds = dsf.ucomp
-		else:
-			ds = xarray.concat((ds,dsf.ucomp),dim='time')
-		dsf.close()
-	ds = ds.sel(lat=slice(-args.latitude_range,args.latitude_range),)
-	weights = np.cos(np.deg2rad(ds.lat))
-	qbo = ds.weighted(weights).mean(dim=['lat','lon'])
+	paths = [os.path.join(args.wd,f'atmos_daily_{i}.nc') for i in range(args.year_from,args.year_to)]
+	qbo = concat_and_weight_qbo(paths,args.latitude_range)
 	qbo.to_netcdf(args.output_name)
 

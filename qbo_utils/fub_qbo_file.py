@@ -1,6 +1,7 @@
 from itertools import zip_longest
 import numpy as np 
 import pandas as pd
+
 class FUBDataFile:
     __SKIPTO = 8
     __LINESTRUCTURE = {
@@ -21,17 +22,20 @@ class FUBDataFile:
         "10hPa":4,
         "n10hPa":1
     }
-    __NUMERIC =  ("70hPa","50hPa","40hPa","30hPa","20hPa","15hPa","10hPa")
+    __NUMERIC =  ["70hPa","50hPa","40hPa","30hPa","20hPa","15hPa","10hPa"]
 
-    def __init__(self,path):
+    def __init__(self,path=None,file=None):
         self.path = path
-        self.file = None
+        self.file = file
         self.struct = {
             k:[] for k in self.__LINESTRUCTURE
         }
 
-    def __enter__(self):
-        self.file = open(self.path)
+    def open(self):
+        if not self.file:
+            self.file = open(self.path)
+        else:
+            self.file.seek(0)
         for i,line in enumerate(self.file):
             if i<=self.__SKIPTO: 
                 continue
@@ -48,17 +52,23 @@ class FUBDataFile:
 
     def to_numpy(self):
         """Provides only the raw data without station or year in a 2d numpy array"""
-        return 0.1*np.transpose(np.array([np.array(self.struct[k],dtype=np.float) for k in self.__NUMERIC]))
+        return 0.1*np.transpose(np.array([np.array(self.struct[k],dtype=np.float32) for k in self.__NUMERIC]))
 
     def to_pandas(self):
         df = pd.DataFrame.from_dict(self.struct)
         df["YYMM"] = pd.to_datetime(df["YYMM"],format="%Y%m")
         df[self.__NUMERIC] = df[self.__NUMERIC]*0.1
-        df = df.rename({"IIII":"Station","YYMM":"Date of Observation"})
+        df = df.rename(columns={"IIII":"Station","YYMM":"Date of Observation"})
         return df
 
-    def __exit__(self,*args):
+    def close(self,*args):
         if self.file is not None:
             self.file.close()
         self.struct = None
         self.file = None
+    
+    def __enter__(self):
+        return self.open()
+    
+    def __exit__(self,*args):
+        return self.close(*args)

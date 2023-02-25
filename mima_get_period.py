@@ -74,11 +74,13 @@ if __name__ == '__main__':
 
     df["qbo_periods"] = qbo_periods
     df["qbo_period_std"] = qbo_periods_std
+    df["qbo_period_sem"] = qbo_periods_std/np.sqrt(qbo_count)
     df["qbo_period_fft"] = qbo_periods_fft
     df["qbo_count"] = qbo_count
     df["qbo_rmse_ampltiude"] = qbo_amplitude_rmse
     df["qbo_amplitude_mean"] = qbo_amplitude_mean
     df["qbo_amplitude_std"] = qbo_amplitude_std
+    df["qbo_amplitude_sem"] = qbo_amplitude_std/np.sqrt(qbo_count)
     df.dropna().to_csv(os.path.join(DATADIR,"qbo_data.csv"))
 
 
