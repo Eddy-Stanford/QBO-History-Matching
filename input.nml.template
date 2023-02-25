@@ -120,7 +120,7 @@
      Bw = 0.4,
      Bn = 0.0,
      cw = 35.0,
-     cwtropics = {{cw}},
+     cwtropics = {{cwtropics}},
      cn =  2.0,
     kelvin_kludge = 1.0,
      weighttop = 0.7,

@@ -1,28 +1,19 @@
 #!/bin/bash
-#SBATCH --job-name=dispatch_uncert
+#SBATCH --job-name=experiment_dispatcher
 #SBATCH --nodes=1
-#SBATCH --time=01:00:00
+#SBATCH --time=00:05:00
 #SBATCH --mem=1G
 #SBATCH --partition=serc
 # Create run directory
-for ((i=1; i<=$#;i++));
-do
-    if [ ${!i} = "--exp-name" ]
-    then ((i++))
-        expname=${!i};
-    fi
-done;
-if [ -z "$expname" ];
-then
-    expname=$SLURM_JOBID
-fi;
-mkdir $SCRATCH/uncert_quant/$expname
+expconfig=$1
 module load python/3.9.0
+expname=$(cat $expconfig | python3 -c "import sys;import json; print(json.load(sys.stdin)['name'])")
+mkdir $SCRATCH/qbo_history_matching/$expname
+cp $expconfig $SCRATCH/qbo_history_matching/$expname/config.json
 # Recreate python env from scratch each run
-python3 -m venv $SCRATCH/uncert_quant/$expname/env
-source $SCRATCH/uncert_quant/$expname/env/bin/activate
-python3 -m pip install -r requirements.txt
+echo "Creating virtual environment for experiment"
+python3 -m venv $SCRATCH/qbo_history_matching/$expname/env
+source $SCRATCH/qbo_history_matching/$expname/env/bin/activate
+python -m pip install -r requirements.txt
 # Run dispatcher
-python dispatcher.py "$@"
-deactivate 
-rm -rf $SCRATCH/uncert_quant/$expname/env
+python wave_dispatcher.py $1 0 

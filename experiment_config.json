@@ -1,0 +1,15 @@
+{
+    "name":"demo",
+    "waves":10,
+    "seed":42,
+    "sample_space":{
+        "cwtropics":{
+            "min":10,
+            "max":90
+        },
+        "Bt_eq":{
+            "min":0.01,
+            "max":0.07
+        }
+    }
+}
