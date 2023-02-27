@@ -1,23 +1,37 @@
-import requests
+import os
 import tempfile
-import os 
-from fub_qbo_file import FUBDataFile
-import numpy as np
+from typing import Tuple
 
+import numpy as np
+import requests
+
+from .fub_qbo_file import FUBDataFile
+from .qbo_process import get_signal_period_amplitude
 
 FUB_DATA_URL = "https://www.geo.fu-berlin.de/met/ag/strat/produkte/qbo/qbo.dat"
 
 
-def fetch_qbo_file(url=FUB_DATA_URL,local_path=None) -> FUBDataFile:
+def fetch_qbo_file(url=FUB_DATA_URL, local_path=None) -> FUBDataFile:
     if local_path and os.path.isfile(local_path):
-        return FUBDataFile(local_path)
-    response = requests.get(url)
+        return FUBDataFile(local_path).open()
+    response = requests.get(url,timeout=120)
     if response.status_code == 200:
-        if local_path: 
-            with open(local_path,'wb') as f:
+        if local_path:
+            with open(local_path, "wb") as f:
                 f.write(response.content)
-            return FUBDataFile(local_path)
+            return FUBDataFile(local_path).open()
         else:
-            file = tempfile.NamedTemporaryFile(mode='w+',encoding='utf-8')
+            file = tempfile.NamedTemporaryFile(mode="w+", encoding="utf-8")
             file.write(response.text)
-            return FUBDataFile(file=file)
+            return FUBDataFile(file=file).open()
+
+
+def get_reference_qbo(fub: FUBDataFile) -> Tuple[float, float, float, float]:
+    data = fub.to_numpy()[:, -1]
+    periods, amplitudes = get_signal_period_amplitude(data)
+    return (
+        np.mean(periods),
+        np.std(periods) / np.sqrt(len(periods)),
+        np.mean(amplitudes),
+        np.std(amplitudes) / np.sqrt(len(amplitudes)),
+    )

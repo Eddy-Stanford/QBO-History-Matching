@@ -16,4 +16,5 @@ python3 -m venv $SCRATCH/qbo_history_matching/$expname/env
 source $SCRATCH/qbo_history_matching/$expname/env/bin/activate
 python -m pip install -r requirements.txt
 # Run dispatcher
+python experiment_init.py $1
 python wave_dispatcher.py $1 0 

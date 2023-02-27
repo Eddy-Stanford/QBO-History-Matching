@@ -10,3 +10,4 @@ waveno=$2
 module load python/3.9.0
 source ../env/bin/activate
 python analysis.py $expconfig $waveno
+

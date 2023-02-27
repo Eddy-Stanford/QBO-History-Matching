@@ -1,15 +1,20 @@
 {
-    "name":"demo",
-    "waves":10,
-    "seed":42,
-    "sample_space":{
-        "cwtropics":{
-            "min":10,
-            "max":90
+    "name": "test",
+    "verbose": true,
+    "waves": 2,
+    "seed": 42,
+    "nruns_per_wave": 5,
+    "time_to_run": 20,
+    "qbo_from": 10,
+    "qbo_to": 20,
+    "sample_space": {
+        "cwtropics": {
+            "min": 10,
+            "max": 90
         },
-        "Bt_eq":{
-            "min":0.01,
-            "max":0.07
+        "Bt_eq": {
+            "min": 0.01,
+            "max": 0.07
         }
     }
 }
