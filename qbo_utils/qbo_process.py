@@ -9,12 +9,12 @@ def rolling_average(signal: np.ndarray, n_months, points_per_month=1):
 
 
 def get_signal_period_amplitude(
-    signal: np.ndarray, smoothed_avg_months=5, points_per_month=1
+    signal: np.ndarray, smoothed_avg_months=3, points_per_month=1
 ):
     smoothed_signal = rolling_average(
         signal, n_months=smoothed_avg_months, points_per_month=points_per_month
     )
-    interp = InterpolatedUnivariateSpline(np.arange(len(signal)), smoothed_signal, k=3)
+    interp = InterpolatedUnivariateSpline(np.arange(len(signal)), smoothed_signal)
     roots = interp.roots()
     transitions = np.round(roots).astype(int)
     amplitudes = []
