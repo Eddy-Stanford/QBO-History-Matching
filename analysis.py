@@ -40,7 +40,7 @@ if __name__ == "__main__":
     wave_base = dispatch_utils.get_wave_base_dir(**config)
     exp_base = dispatch_utils.get_exp_base_dir(**config)
     ## Make directory for run analysis
-    os.makedirs(os.path.join(wave_base, "analysis"))
+    os.makedirs(os.path.join(wave_base, "analysis"), exist_ok=True)
     df = pd.read_csv(
         os.path.join(exp_base, f"{args.waveno}_samples.csv"), index_col="run_id"
     )
