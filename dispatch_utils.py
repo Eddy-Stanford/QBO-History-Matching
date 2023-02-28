@@ -87,8 +87,8 @@ def get_samples(wave, **kwargs):
 
 def positive_int(val):
     val = int(val)
-    if val <= 0:
-        raise argparse.ArgumentTypeError("Value must be positive")
+    if val < 0:
+        raise argparse.ArgumentTypeError("Value must be non negative")
     return val
 
 
