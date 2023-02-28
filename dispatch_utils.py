@@ -129,7 +129,7 @@ def qbo_merge_run(
         jobid = get_jobid_from_stdout(proc_status.stdout)
         return jobid
     else:
-        raise RuntimeError("Unable to dispatch model run job")
+        raise RuntimeError(f"Unable to dispatch qbo merge job with: with:{proc_status.stderr} ({proc_status.returncode})")
 
 
 def analysis_run(configfile, dependency_id, wave, **kwargs):
@@ -150,7 +150,9 @@ def analysis_run(configfile, dependency_id, wave, **kwargs):
         jobid = get_jobid_from_stdout(proc_status.stdout)
         return jobid
     else:
-        raise RuntimeError("Unable to dispatch model run job")
+        raise RuntimeError(
+            f"Unable to dispatch analysis job with:{proc_status.stderr} ({proc_status.returncode})"
+        )
 
 
 def next_wave_run(configfile, dependency_id, wave, **kwargs):
@@ -169,4 +171,4 @@ def next_wave_run(configfile, dependency_id, wave, **kwargs):
         jobid = get_jobid_from_stdout(proc_status.stdout)
         return jobid
     else:
-        raise RuntimeError("Unable to dispatch model run job")
+        raise RuntimeError(f"Unable to dispatch next wave job with: {proc_status.stderr} ({proc_status.returncode})")
