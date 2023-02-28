@@ -45,5 +45,5 @@ if __name__ == "__main__":
         for i in range(args.year_from, args.year_to)
     ]
     qbo = concat_and_weight_qbo(paths, args.latitude_range)
-    qbo.to_netcdf(args.output_name)
+    qbo.to_netcdf(os.path.join(args.wd, args.output_name))
     print(f"Written {args.output_name}")
