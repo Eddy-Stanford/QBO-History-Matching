@@ -26,5 +26,5 @@ if __name__ == "__main__":
 
     if args.waveno < config["waves"]:
         dispatch_utils.next_wave_run(
-            args.configfile, args.waveno + 1, analysis_id, *config
+            args.configfile, analysis_id, args.waveno + 1, **config
         )
