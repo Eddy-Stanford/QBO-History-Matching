@@ -66,7 +66,8 @@ def write_namefile(dir, template, **params):
 
 def get_wave_base_dir(name, wave, **kwargs):
     base = os.path.expandvars(f"$SCRATCH/qbo_history_matching/{name}/wave_{wave}")
-    os.makedirs(base)
+    if not os.path.exists(base):
+        os.makedirs(base)
     return base
 
 
@@ -137,7 +138,7 @@ def qbo_merge_run(
 
 
 def analysis_run(configfile, dependency_id, wave, **kwargs):
-    wave_base = get_wave_base_dir(wave=wave,**kwargs)
+    wave_base = get_wave_base_dir(wave=wave, **kwargs)
     proc_status = subprocess.run(
         [
             "sbatch",
