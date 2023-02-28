@@ -2,6 +2,7 @@ import argparse
 import os
 
 import joblib
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -118,7 +119,6 @@ if __name__ == "__main__":
 
     # Optional plotting code
     if config.get("verbose"):
-        import matplotlib.pyplot as plt
 
         fig, (ax1, ax2, ax3) = plt.subplots(n_rows=1, n_cols=3, figsize=(14, 6))
         CS = y_pred[0].plot.contour(levels=25)
