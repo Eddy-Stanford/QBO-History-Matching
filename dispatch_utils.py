@@ -129,7 +129,9 @@ def qbo_merge_run(
         jobid = get_jobid_from_stdout(proc_status.stdout)
         return jobid
     else:
-        raise RuntimeError(f"Unable to dispatch qbo merge job with: with:{proc_status.stderr} ({proc_status.returncode})")
+        raise RuntimeError(
+            f"Unable to dispatch qbo merge job with: with:{proc_status.stderr} ({proc_status.returncode})"
+        )
 
 
 def analysis_run(configfile, dependency_id, wave, **kwargs):
@@ -155,7 +157,7 @@ def analysis_run(configfile, dependency_id, wave, **kwargs):
         )
 
 
-def next_wave_run(configfile, dependency_id, wave, **kwargs):
+def next_wave_run(configfile, dependency_id, next_wave, **kwargs):
     proc_status = subprocess.run(
         [
             "sbatch",
@@ -163,7 +165,7 @@ def next_wave_run(configfile, dependency_id, wave, **kwargs):
             f"afterok:{dependency_id}",
             "run_wave.sh",
             configfile,
-            str(wave),
+            str(next_wave),
         ],
         capture_output=True,
     )
@@ -171,4 +173,6 @@ def next_wave_run(configfile, dependency_id, wave, **kwargs):
         jobid = get_jobid_from_stdout(proc_status.stdout)
         return jobid
     else:
-        raise RuntimeError(f"Unable to dispatch next wave job with: {proc_status.stderr} ({proc_status.returncode})")
+        raise RuntimeError(
+            f"Unable to dispatch next wave job with: {proc_status.stderr} ({proc_status.returncode})"
+        )
