@@ -22,6 +22,12 @@ def get_qbo_period_amplitude(run_id, qbo_from, qbo_to, **config):
     )
     with xr.open_dataset(path) as ds:
         u = ds.ucomp.sel(pfull=10, method="nearest")
+        if config.get("verbose"):
+            fig, ax = plt.subplots()
+            ax.plot(u)
+            ax.set_xlabel("Time (days)")
+            ax.set_ylabel("u @ 10hPa (m/s)")
+            fig.savefig(os.path.join(wave_base, "analysis", "u.png"))
         periods, amplitudes = get_signal_period_amplitude(u, points_per_month=30)
     return (
         np.mean(periods),
