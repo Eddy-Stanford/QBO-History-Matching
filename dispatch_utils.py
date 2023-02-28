@@ -157,7 +157,7 @@ def analysis_run(configfile, dependency_id, wave, **kwargs):
         )
 
 
-def next_wave_run(configfile, dependency_id, next_wave, **kwargs):
+def next_wave_run(configfile, dependency_id, next_wav):
     proc_status = subprocess.run(
         [
             "sbatch",
