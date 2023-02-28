@@ -14,7 +14,8 @@ from qbo_utils.qbo_ref import fetch_qbo_file, get_reference_qbo
 
 
 def get_qbo_period_amplitude(run_id, qbo_from, qbo_to, **config):
-    path = f"{run_id.zfill(2)}/{run_id.zfill(2)}_QBO_{qbo_from}_{qbo_to}.nc"
+    wave_base = dispatch_utils.get_wave_base_dir(**config)
+    path = os.path.join(wave_base,f"{run_id.zfill(2)}",f"{run_id.zfill(2)}_QBO_{qbo_from}_{qbo_to}.nc")
     with xr.open_dataset(path) as ds:
         u = ds.ucomp.sel(pfull=10, method="nearest")
         periods, amplitudes = get_signal_period_amplitude(u, points_per_month=30)
