@@ -119,9 +119,9 @@ def qbo_merge_run(
             "--array",
             f"0-{nruns_per_wave-1}:10",
             "extract_qbo/bulk_extract_qbo.sh",
-            wave_base,
-            qbo_from,
-            qbo_to,
+            str(wave_base),
+            str(qbo_from),
+            str(qbo_to),
         ],
         capture_output=True,
     )
@@ -142,7 +142,7 @@ def analysis_run(configfile, dependency_id, wave, **kwargs):
             f"afterok:{dependency_id}",
             "analysis_run.sh",
             configfile,
-            wave,
+            str(wave),
         ],
         capture_output=True,
     )
@@ -161,7 +161,7 @@ def next_wave_run(configfile, dependency_id, wave, **kwargs):
             f"afterok:{dependency_id}",
             "run_wave.sh",
             configfile,
-            wave,
+            str(wave),
         ],
         capture_output=True,
     )
