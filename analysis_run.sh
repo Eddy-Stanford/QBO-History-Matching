@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=wave_analysis
-#SBATCH --cpu-per-task=16
+#SBATCH --cpus-per-task=16
 #SBATCH --time=01:00:00
 #SBATCH --mem=32G
 #SBATCH --partition=serc
