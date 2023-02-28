@@ -10,7 +10,7 @@ for i in {0..9}; do
     echo "working on " $1/$idx
     if [ -d $1/$idx ]
     then
-        srun -n 1 python extract_qbo/extract_qbo.py $1/$idx $2 $3 --output-name "${idx}_QBO_${2}_${3}.nc" --latitude_range=5 & 
+        srun -n 1 python extract_qbo/extract_qbo.py $1/$idx $2 $3 --output-name "${1}/${idx}_QBO_${2}_${3}.nc" --latitude_range=5 & 
     fi
 done
 wait
