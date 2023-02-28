@@ -118,6 +118,8 @@ def qbo_merge_run(
             f"afterok:{dependency_id}",
             "--array",
             f"0-{nruns_per_wave-1}:10",
+            "--output",
+            f"{wave_base}/qbo_merge.log",
             "extract_qbo/bulk_extract_qbo.sh",
             str(wave_base),
             str(qbo_from),
@@ -135,13 +137,14 @@ def qbo_merge_run(
 
 
 def analysis_run(configfile, dependency_id, wave, **kwargs):
+    wave_base = get_wave_base_dir(wave=wave,**kwargs)
     proc_status = subprocess.run(
         [
             "sbatch",
-            "--chdir",
-            get_exp_base_dir(wave=wave, **kwargs),
             "--dependency",
             f"afterok:{dependency_id}",
+            "--output",
+            f"{wave_base}/analysis.log",
             "analysis_run.sh",
             configfile,
             str(wave),
