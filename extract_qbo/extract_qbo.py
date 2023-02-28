@@ -46,3 +46,4 @@ if __name__ == "__main__":
     ]
     qbo = concat_and_weight_qbo(paths, args.latitude_range)
     qbo.to_netcdf(args.output_name)
+    print(f"Written {args.output_name}")
