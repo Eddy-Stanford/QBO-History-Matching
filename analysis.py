@@ -94,8 +94,10 @@ if __name__ == "__main__":
     # Optional plotting code
     if config.get("verbose"):
         import matplotlib.pyplot as plt
-        fig,ax = plt.subplots(n_rows=1,n_cols=3,figsize=(12,6))
-        
+        fig,(ax1,ax2,ax3) = plt.subplots(n_rows=1,n_cols=3,figsize=(14,6))
+        CS = y_pred[0].plot.contour(levels=25)
+        ax1.scatter(X[:,0],X[:,1],marker='x')
+        ax1.clabel(CS,CS.levels,inline=True,fontsize=10)
 
         fig.savefig("analysis/space.png")
 

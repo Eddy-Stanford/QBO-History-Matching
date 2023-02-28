@@ -2,7 +2,6 @@
     "name": "test",
     "verbose": true,
     "waves": 2,
-    "seed": 42,
     "nruns_per_wave": 5,
     "time_to_run": 20,
     "qbo_from": 10,
