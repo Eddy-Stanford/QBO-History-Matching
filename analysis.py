@@ -35,8 +35,8 @@ if __name__ == "__main__":
 
     ## Make directory for run analysis
     os.makedirs("./analysis")
-    df = pd.read_csv(f"../wave_{args.waveno}", index_col="run_id")
-    ## Get QBO files and convert them to numpty
+    df = pd.read_csv(f"../{args.waveno}_samples.csv", index_col="run_id")
+    ## Get QBO files and convert them to numpy
 
     ## TODO: This code is pretty hardcoded rn, if we decide to
     ## look in to using more params/more observables this will need to
