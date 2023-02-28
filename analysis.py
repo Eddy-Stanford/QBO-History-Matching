@@ -28,7 +28,7 @@ def get_qbo_period_amplitude(run_id, qbo_from, qbo_to, **config):
             ax.plot(u)
             ax.set_xlabel("Time (days)")
             ax.set_ylabel("u @ 10hPa (m/s)")
-            fig.savefig(os.path.join(wave_base, "analysis", "u.png"))
+            fig.savefig(os.path.join(wave_base, "analysis", f"u_{run_id}.png"))
         periods, amplitudes = get_signal_period_amplitude(u, points_per_month=30)
     if config.get("verbose"):
         print(f"Run:{run_id}, periods:{periods}")
