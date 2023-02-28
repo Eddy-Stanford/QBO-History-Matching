@@ -19,5 +19,5 @@ if __name__ == "__main__":
     base = dispatch_utils.get_exp_base_dir(**config)
     space = get_first_wave_space(**config)
     initial_samples = space.lhs_sample(config["nruns_per_wave"], labelled=True)
-    initial_samples.to_csv(os.path.join(base,"0_samples.csv"))
+    initial_samples.to_csv(os.path.join(base,"0_samples.csv"),index_label='run_id')
     joblib.dump(space, os.path.join(base,"0.space"))

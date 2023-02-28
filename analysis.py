@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
     ## Save samples and new space
     joblib.dump(f"../{args.waveno + 1}.space",new_space)
-    new_samples.to_csv(f"../{args.waveno +1}_samples.csv")
+    new_samples.to_csv(f"../{args.waveno +1}_samples.csv",index_label='run_id')
 
     # Optional plotting code
     if config.get("verbose"):
