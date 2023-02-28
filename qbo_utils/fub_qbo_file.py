@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 
@@ -32,7 +31,7 @@ class FUBDataFile:
 
     def open(self):
         if not self.file:
-            self.file = open(self.path,'utf-8')
+            self.file = open(self.path, encoding="utf-8")
         else:
             self.file.seek(0)
         for i, line in enumerate(self.file):
