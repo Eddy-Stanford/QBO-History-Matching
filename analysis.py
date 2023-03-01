@@ -127,17 +127,23 @@ if __name__ == "__main__":
         ax1.clabel(CS, CS.levels, inline=True, fontsize=10)
         ax1.set_ylabel("Cw")
         ax1.set_xlabel("Bt")
-        ax1.set_title("QBO Amplitude (m/s)")
+        ax1.set_title("QBO Period (m/s)")
 
         CS2 = y_pred[1].plot.contour(ax=ax2, levels=25)
         ax2.scatter(X[:, 1], X[:, 0], marker="x")
         ax2.clabel(CS2, CS2.levels, inline=True, fontsize=10)
         ax2.set_ylabel("Cw")
         ax2.set_xlabel("Bt")
-        ax2.set_title("QBO Period (months)")
+        ax2.set_title("QBO Amplitude (months)")
 
         imp_map.plot.contour(ax=ax3, levels=25)
-        CS3 = imp_cutoff.plot.contourf(ax=ax3, alpha=0.3, cmap="RdYlGn", levels=2,legend=None)
+        CS3 = new_space.to_xarray().plot.contourf(
+            ax=ax3,
+            alpha=0.3,
+            cmap="RdYlGn",
+            levels=1,
+            add_colorbar=False,
+        )
         ax3.scatter(X[:, 1], X[:, 0], marker="x")
         ax3.set_ylabel("Cw")
         ax3.set_xlabel("Bt")
