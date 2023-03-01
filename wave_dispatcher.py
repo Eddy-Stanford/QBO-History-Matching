@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     analysis_id = dispatch_utils.analysis_run(args.configfile, qbo_merge_id, **config)
 
-    if args.waveno < config["waves"]:
+    if args.waveno + 1 < config["waves"]:
         dispatch_utils.next_wave_run(
             args.configfile, analysis_id, args.waveno + 1,
         )
