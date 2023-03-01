@@ -123,22 +123,22 @@ if __name__ == "__main__":
 
         fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(14, 6))
         CS = y_pred[0].plot.contour(ax=ax1, levels=25)
-        ax1.scatter(X[:, 0], X[:, 1], marker="x")
+        ax1.scatter(X[:, 1], X[:, 0], marker="x")
         ax1.clabel(CS, CS.levels, inline=True, fontsize=10)
         ax1.set_ylabel("Cw")
         ax1.set_xlabel("Bt")
         ax1.set_title("QBO Amplitude (m/s)")
 
         CS2 = y_pred[1].plot.contour(ax=ax2, levels=25)
-        ax2.scatter(X[:, 0], X[:, 1], marker="x")
+        ax2.scatter(X[:, 1], X[:, 0], marker="x")
         ax2.clabel(CS2, CS2.levels, inline=True, fontsize=10)
         ax2.set_ylabel("Cw")
         ax2.set_xlabel("Bt")
         ax2.set_title("QBO Period (months)")
 
         imp_map.plot.contour(ax=ax3, levels=25)
-        CS3 = imp_cutoff.plot.contourf(ax=ax3, alpha=0.3, cmap="RdYlGn", levels=2)
-        ax3.scatter(X[:, 0], X[:, 1], marker="x")
+        CS3 = imp_cutoff.plot.contourf(ax=ax3, alpha=0.3, cmap="RdYlGn", levels=2,legend=None)
+        ax3.scatter(X[:, 1], X[:, 0], marker="x")
         ax3.set_ylabel("Cw")
         ax3.set_xlabel("Bt")
         ax3.legend(
