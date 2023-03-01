@@ -141,7 +141,6 @@ if __name__ == "__main__":
             ax=ax3,
             alpha=0.3,
             cmap="RdYlGn",
-            levels=1,
             add_colorbar=False,
         )
         ax3.scatter(X[:, 1], X[:, 0], marker="x")
