@@ -69,7 +69,7 @@ if __name__ == "__main__":
             run, **config
         )
         y[run] = [period, amplitude]
-        y[run] = [period_err, amplitude_err]
+        y_err[run] = [period_err, amplitude_err]
 
     if config.get("verbose"):
         np.save(os.path.join(wave_base, "analysis", "X.npy"), X)
