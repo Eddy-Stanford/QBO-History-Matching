@@ -112,7 +112,7 @@ if __name__ == "__main__":
     new_samples = new_space.uniform(config["nruns_per_wave"], labelled=True)
 
     ## Save samples and new space
-    joblib.dump(os.path.join(exp_base, f"{args.waveno + 1}.space"), new_space)
+    joblib.dump(new_space, os.path.join(exp_base, f"{args.waveno + 1}.space"))
     new_samples.to_csv(
         os.path.join(exp_base, f"{args.waveno +1}_samples.csv"), index_label="run_id"
     )
