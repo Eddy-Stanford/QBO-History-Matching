@@ -137,7 +137,7 @@ if __name__ == "__main__":
         ax2.set_title("QBO Period (months)")
 
         imp_map.plot.contour(levels=25)
-        CS3 = imp_cutoff.plot.contourf(alpha=0.3, cmap="RdYlGn", levels=1)
+        CS3 = imp_cutoff.plot.contourf(alpha=0.3, cmap="RdYlGn", levels=2)
         ax3.scatter(X[:, 0], X[:, 1], marker="x")
         ax3.set_ylabel("Cw")
         ax3.set_xlabel("Bt")
