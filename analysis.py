@@ -121,7 +121,7 @@ if __name__ == "__main__":
     if config.get("verbose"):
         import matplotlib.patches as mpatches
 
-        fig, (ax1, ax2, ax3) = plt.subplots(n_rows=1, n_cols=3, figsize=(14, 6))
+        fig, (ax1, ax2, ax3) = plt.subplot(1, 3, figsize=(14, 6))
         CS = y_pred[0].plot.contour(levels=25)
         ax1.scatter(X[:, 0], X[:, 1], marker="x")
         ax1.clabel(CS, CS.levels, inline=True, fontsize=10)
