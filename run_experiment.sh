@@ -11,7 +11,7 @@ expname=$(cat $expconfig | python3 -c "import sys;import json; print(json.load(s
 mkdir $SCRATCH/qbo_history_matching/$expname
 cp $expconfig $SCRATCH/qbo_history_matching/$expname/config.json
 # Recreate python env from scratch each run
-echo "Creating virtual environment for experiment"
+echo "Creating virtual environment for experiment: ${expname}"
 python3 -m venv $SCRATCH/qbo_history_matching/$expname/env
 source $SCRATCH/qbo_history_matching/$expname/env/bin/activate
 python -m pip install -r requirements.txt
