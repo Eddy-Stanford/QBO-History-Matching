@@ -156,4 +156,4 @@ if __name__ == "__main__":
         )
         ax3.set_title("Implausibility")
 
-        fig.savefig(os.path.join(wave_base, "analysis", "space.png"))
+        fig.savefig(os.path.join(wave_base, "analysis", "space.png"), dpi=300)
