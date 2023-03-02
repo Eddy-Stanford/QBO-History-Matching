@@ -1,0 +1,19 @@
+{
+    "name": "qbo_main",
+    "verbose": true,
+    "waves": 5,
+    "nruns_per_wave": 100,
+    "time_to_run": 40,
+    "qbo_from": 20,
+    "qbo_to": 40,
+    "sample_space": {
+        "cwtropics": {
+            "min": 10,
+            "max": 80
+        },
+        "Bt_eq": {
+            "min": 0.001,
+            "max": 0.007
+        }
+    }
+}
