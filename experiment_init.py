@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 
 import joblib
@@ -18,6 +19,11 @@ if __name__ == "__main__":
     config = dispatch_utils.load_config_file(configfile, 0)
     base = dispatch_utils.get_exp_base_dir(**config)
     space = get_first_wave_space(**config)
-    initial_samples = space.lhs_sample(config["nruns_per_wave"], labelled=True)
-    initial_samples.to_csv(os.path.join(base,"0_samples.csv"),index_label='run_id')
-    joblib.dump(space, os.path.join(base,"0.space"))
+    if "init_space_samples" in config:
+        shutil.copy(config["init_space_samples"], os.path.join(base, "0_samples.csv"))
+    else:
+        initial_samples = space.lhs_sample(config["nruns_per_wave"], labelled=True)
+        initial_samples.to_csv(
+            os.path.join(base, "0_samples.csv"), index_label="run_id"
+        )
+    joblib.dump(space, os.path.join(base, "0.space"))
