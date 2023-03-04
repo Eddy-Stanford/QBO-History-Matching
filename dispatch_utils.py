@@ -178,5 +178,6 @@ def next_wave_run(configfile, dependency_id, next_wave):
         return jobid
     else:
         raise RuntimeError(
-            f"Unable to dispatch next wave job with: {proc_status.stderr} ({proc_status.returncode})"
+            "Unable to dispatch next wave job with:"
+            f"{proc_status.stderr} ({proc_status.returncode})"
         )
