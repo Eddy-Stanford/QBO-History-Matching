@@ -47,6 +47,8 @@ def model_run(basedir, nruns_per_wave, time_to_run, concurrency=20, **kwargs):
     )
     if proc_status.returncode == 0:
         jobid = get_jobid_from_stdout(proc_status.stdout)
+        if kwargs.get("verbose"):
+            print(f"[DISPATCHED] Model run {jobid} dispatched")
         return jobid
     else:
         raise RuntimeError("Unable to dispatch model run job")
@@ -130,6 +132,8 @@ def qbo_merge_run(
     )
     if proc_status.returncode == 0:
         jobid = get_jobid_from_stdout(proc_status.stdout)
+        if kwargs.get("verbose"):
+            print(f"[DISPATCHED] QBO Merge Run job {jobid} dispatched")
         return jobid
     else:
         raise RuntimeError(
@@ -154,6 +158,8 @@ def analysis_run(configfile, dependency_id, wave, **kwargs):
     )
     if proc_status.returncode == 0:
         jobid = get_jobid_from_stdout(proc_status.stdout)
+        if kwargs.get("verbose"):
+            print(f"[DISPATCHED] Analysis job {jobid} dispatched")
         return jobid
     else:
         raise RuntimeError(

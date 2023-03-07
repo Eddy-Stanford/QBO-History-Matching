@@ -15,10 +15,11 @@ if __name__ == "__main__":
 
     for run, sample in samples.iterrows():
         run_dir = dispatch_utils.create_run_dirs(wave_base, run)
+        if config.get("verbose"):
+            print(f"[WRITTEN] namefile for {run} with parameters:{dict(**samples)} ")
         dispatch_utils.write_namefile(run_dir, template, **sample)
 
     modelrun_id = dispatch_utils.model_run(wave_base, **config)
-    print(f"[DISPATCHED] Model run {modelrun_id} dispatched")
 
     qbo_merge_id = dispatch_utils.qbo_merge_run(wave_base, modelrun_id, **config)
 
@@ -26,5 +27,7 @@ if __name__ == "__main__":
 
     if args.waveno + 1 < config["waves"]:
         dispatch_utils.next_wave_run(
-            args.configfile, analysis_id, args.waveno + 1,
+            args.configfile,
+            analysis_id,
+            args.waveno + 1,
         )
