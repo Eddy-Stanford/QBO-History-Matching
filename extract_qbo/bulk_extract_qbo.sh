@@ -1,7 +1,7 @@
 #! /bin/bash
 #SBATCH --mem=32G
 #SBATCH --partition=serc
-#SBATCH --time=01:00:00
+#SBATCH --time=00:30:00
 #SBATCH -n 10
 module load python/3.9.0
 source $1/../env/bin/activate
