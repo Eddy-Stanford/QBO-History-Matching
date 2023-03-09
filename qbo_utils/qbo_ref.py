@@ -14,7 +14,7 @@ FUB_DATA_URL = "https://www.geo.fu-berlin.de/met/ag/strat/produkte/qbo/qbo.dat"
 def fetch_qbo_file(url=FUB_DATA_URL, local_path=None) -> FUBDataFile:
     if local_path and os.path.isfile(local_path):
         return FUBDataFile(local_path).open()
-    response = requests.get(url,timeout=120)
+    response = requests.get(url, timeout=120)
     if response.status_code == 200:
         if local_path:
             with open(local_path, "wb") as f:
@@ -28,6 +28,7 @@ def fetch_qbo_file(url=FUB_DATA_URL, local_path=None) -> FUBDataFile:
 
 def get_reference_qbo(fub: FUBDataFile) -> Tuple[float, float, float, float]:
     data = fub.to_numpy()[:, -1]
+    data = data[~np.isnan(data)]
     periods, amplitudes = get_signal_period_amplitude(data)
     return (
         np.mean(periods),

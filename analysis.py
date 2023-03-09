@@ -40,9 +40,9 @@ def get_qbo_period_amplitude(run_id, qbo_from, qbo_to, **config):
         print(f"Run:{run_id}, amplitudes:{amplitudes}")
     return (
         np.mean(periods),
-        np.std(periods) / len(np.sqrt(periods)),
+        np.std(periods) / np.sqrt(len(periods)),
         np.mean(amplitudes),
-        np.std(amplitudes) / len(np.sqrt(amplitudes)),
+        np.std(amplitudes) / np.sqrt(len(amplitudes)),
     )
 
 
