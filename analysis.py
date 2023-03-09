@@ -132,14 +132,14 @@ if __name__ == "__main__":
         ax1.clabel(CS, CS.levels, inline=True, fontsize=10)
         ax1.set_ylabel("Cw")
         ax1.set_xlabel("Bt")
-        ax1.set_title("QBO Period (m/s)")
+        ax1.set_title("QBO Period (months)")
 
         CS2 = y_pred[1].plot.contour(ax=ax2, levels=25)
         ax2.scatter(X[:, 1], X[:, 0], marker="x")
         ax2.clabel(CS2, CS2.levels, inline=True, fontsize=10)
         ax2.set_ylabel("Cw")
         ax2.set_xlabel("Bt")
-        ax2.set_title("QBO Amplitude (months)")
+        ax2.set_title("QBO Amplitude (m/s)")
 
         imp_map.plot.contour(ax=ax3, levels=25)
         CS3 = new_space.to_xarray().plot.contourf(
