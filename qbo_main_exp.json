@@ -8,8 +8,8 @@
     "qbo_to": 40,
     "sample_space": {
         "cwtropics": {
-            "min": 10,
-            "max": 80
+            "min": 5,
+            "max": 70
         },
         "Bt_eq": {
             "min": 0.001,

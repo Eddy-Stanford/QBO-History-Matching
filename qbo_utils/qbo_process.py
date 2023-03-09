@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.fft import fft, fftfreq
-from scipy.interpolate import InterpolatedUnivariateSpline
+from scipy.interpolate import InterpolatedUnivariateSpline, sproot
 
 
 def rolling_average(signal: np.ndarray, n_months, points_per_month=1):
@@ -15,10 +15,11 @@ def get_signal_period_amplitude(
         signal, n_months=smoothed_avg_months, points_per_month=points_per_month
     )
     interp = InterpolatedUnivariateSpline(np.arange(len(signal)), smoothed_signal)
-    roots = interp.roots()
+    est_roots = len(signal) / (8 * points_per_month)
+    roots = sproot((interp.get_knots(), interp.get_coeffs(), 3), mest=est_roots)
     transitions = np.round(roots).astype(int)
     amplitudes = []
-    for (start, stop) in zip(transitions[::2], transitions[2::2]):
+    for start, stop in zip(transitions[::2], transitions[2::2]):
         period_max = np.max(signal[start:stop])
         period_min = np.min(signal[start:stop])
         amplitudes.append((period_max - period_min) / 2)
