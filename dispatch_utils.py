@@ -44,14 +44,12 @@ def model_run(basedir, nruns_per_wave, time_to_run, concurrency=20, **kwargs):
             str(time_to_run),
         ],
         capture_output=True,
+        check=True,
     )
-    if proc_status.returncode == 0:
-        jobid = get_jobid_from_stdout(proc_status.stdout)
-        if kwargs.get("verbose"):
-            print(f"[DISPATCHED] Model run {jobid} dispatched")
-        return jobid
-    else:
-        raise RuntimeError("Unable to dispatch model run job")
+    jobid = get_jobid_from_stdout(proc_status.stdout)
+    if kwargs.get("verbose"):
+        print(f"[DISPATCHED] Model run {jobid} dispatched")
+    return jobid
 
 
 def get_template(name="input.nml.template"):
@@ -129,16 +127,12 @@ def qbo_merge_run(
             str(qbo_to),
         ],
         capture_output=True,
+        check=True,
     )
-    if proc_status.returncode == 0:
-        jobid = get_jobid_from_stdout(proc_status.stdout)
-        if kwargs.get("verbose"):
-            print(f"[DISPATCHED] QBO Merge Run job {jobid} dispatched")
-        return jobid
-    else:
-        raise RuntimeError(
-            f"Unable to dispatch qbo merge job with: with:{proc_status.stderr} ({proc_status.returncode})"
-        )
+    jobid = get_jobid_from_stdout(proc_status.stdout)
+    if kwargs.get("verbose"):
+        print(f"[DISPATCHED] QBO Merge Run job {jobid} dispatched")
+    return jobid
 
 
 def analysis_run(configfile, dependency_id, wave, **kwargs):
@@ -155,6 +149,7 @@ def analysis_run(configfile, dependency_id, wave, **kwargs):
             str(wave),
         ],
         capture_output=True,
+        check=True,
     )
     if proc_status.returncode == 0:
         jobid = get_jobid_from_stdout(proc_status.stdout)
@@ -178,12 +173,7 @@ def next_wave_run(configfile, dependency_id, next_wave):
             str(next_wave),
         ],
         capture_output=True,
+        check=True,
     )
-    if proc_status.returncode == 0:
-        jobid = get_jobid_from_stdout(proc_status.stdout)
-        return jobid
-    else:
-        raise RuntimeError(
-            "Unable to dispatch next wave job with:"
-            f"{proc_status.stderr} ({proc_status.returncode})"
-        )
+    jobid = get_jobid_from_stdout(proc_status.stdout)
+    return jobid
