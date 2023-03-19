@@ -15,5 +15,10 @@
             "min": 0.001,
             "max": 0.007
         }
+    },
+    "hotstart":{
+        "start":1, // Wave to start at,
+        "time_to_run":20,
+        
     }
 }

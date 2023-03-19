@@ -61,8 +61,8 @@ def get_template(name="input.nml.template"):
     return template
 
 
-def write_namefile(dir, template, **params):
-    with open(os.path.join(dir, "input.nml"), "w") as input_namefile:
+def write_namefile(directory, template, **params):
+    with open(os.path.join(directory, "input.nml"), "w") as input_namefile:
         input_namefile.write(template.render(**params))
 
 
