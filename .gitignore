@@ -2,7 +2,7 @@ __pycache__/**
 *.pyc
 *.nc
 *.dat
-*.csv
+
 *.png
 .vscode
 logs/
