@@ -1,0 +1,32 @@
+{
+    "name": "20_sample_exp",
+    "verbose": true,
+    "concurrency":15,
+    "waves": 10,
+    "cpus":16,
+    "convergence_criterion":5,
+    "init_space_samples":"/home/users/robcking/history_matching_seeds/20_seeds.csv",
+    "nruns_per_wave": 20,
+    "time_to_run": 40,
+    "spinup":20,
+    "hold":false,
+    "random_state":42,
+    "significance_level":0.01,
+    "sample_space": {
+        "cwtropics": {
+            "min": 5,
+            "max": 80
+        },
+        "Bt_eq": {
+            "min": 0.001,
+            "max": 0.007
+        }
+    },
+    "hotstart":{
+        "start":1, 
+        "overrides":{
+            "time_to_run":22,
+            "spinup":2
+        }
+    }
+}
