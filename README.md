@@ -10,7 +10,7 @@ The code in the repository extends the generic history matching code available [
 This repository is maintained by Robert King (robcking@stanford.edu)
 
 ## Obtaining model runs
-This work utilized the Model of an idealized Moist Atmosphere GCM (Jucker and Gerber, 2017) which has the AD99 parameterization implemented within it. The scripts in this repository utilize an `apptainer` containerized version of MiMA which is available at https://github.com/Eddy-Stanford/MiMA on the `container` branch. All scripts look for a compiled container available at a path specified by the `$MIMAPATH` environment variable. 
+This work utilized the Model of an idealized Moist Atmosphere GCM (Jucker and Gerber, 2017) which has the AD99 parameterization implemented within it. The scripts in this repository utilize an `apptainer` containerized version of MiMA which is available at https://github.com/Eddy-Stanford/MiMA on the `container` branch. All scripts look for a compiled container (e.g `mima.sif`) available at a path specified by the `$MIMAPATH` environment variable. 
 
 
 ## Experiment definition files
