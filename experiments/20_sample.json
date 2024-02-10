@@ -5,7 +5,7 @@
     "waves": 10,
     "cpus":16,
     "convergence_criterion":5,
-    "init_space_samples":"/home/users/robcking/history_matching_seeds/20_seeds.csv",
+    "init_space_samples":"seeds/20_seeds.csv",
     "nruns_per_wave": 20,
     "time_to_run": 40,
     "spinup":20,

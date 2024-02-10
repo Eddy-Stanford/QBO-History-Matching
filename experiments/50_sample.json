@@ -7,7 +7,7 @@
     "nruns_per_wave": 50,
     "time_to_run": 40,
     "spinup":20,
-    "init_space_samples":"/home/users/robcking/history_matching_seeds/50_seeds.csv",
+    "init_space_samples":"seeds/50_seeds.csv",
     "sample_space": {
         "cwtropics": {
             "min": 5,
