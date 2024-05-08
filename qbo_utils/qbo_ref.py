@@ -9,13 +9,14 @@ from .fub_qbo_file import FUBDataFile
 from .qbo_process import get_signal_period_amplitude
 
 FUB_DATA_URL = "https://www.geo.fu-berlin.de/met/ag/strat/produkte/qbo/qbo.dat"
-
+DEFAULT_TIMEOUT=120 # timeout in seconds
+SUCCESS=200 # HTTP SUCCESS CODE
 
 def fetch_qbo_file(url=FUB_DATA_URL, local_path=None) -> FUBDataFile:
     if local_path and os.path.isfile(local_path):
         return FUBDataFile(local_path).open()
-    response = requests.get(url, timeout=120)
-    if response.status_code == 200:
+    response = requests.get(url, timeout=DEFAULT_TIMEOUT)
+    if response.status_code == SUCCESS:
         if local_path:
             with open(local_path, "wb") as f:
                 f.write(response.content)
