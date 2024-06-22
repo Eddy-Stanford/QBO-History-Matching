@@ -6,7 +6,7 @@
 #SBATCH --partition=serc
 # Create run directory
 expconfig=$1
-module load python/3.9.0
+module load python/3.12.1
 expname=$(cat $expconfig | python3 -c "import sys;import json; print(json.load(sys.stdin)['name'])")
 mkdir $SCRATCH/qbo_history_matching/$expname
 cp $expconfig $SCRATCH/qbo_history_matching/$expname/config.json
