@@ -1,30 +1,35 @@
 {
     "name": "5_sample_exp",
     "verbose": true,
-    "cpus":32,
-    "waves": 25,
-    "nruns_per_wave": 5,
-    "time_to_run": 40,
-    "spinup":20,
-    "init_space_samples":"seeds/5_seeds.csv",
-    "convergence_criterion":5,
-    "random_state":42,
-    "significance_level":0.01,
-    "sample_space": {
-        "cwtropics": {
-            "min": 5,
-            "max": 80
-        },
-        "Bt_eq": {
-            "min": 0.001,
-            "max": 0.007
+    "cpus": 16,
+    "history_matching": {
+        "convergence_criterion": 5,
+        "concurrency": 10,
+        "waves": 15,
+        "nruns_per_wave": 5,
+        "time_to_run": 40,
+        "spinup": 20,
+        "random_state": 42,
+        "significance_level": 0.01,
+        "hotstart": {
+            "start": 1,
+            "overrides": {
+                "time_to_run": 22,
+                "spinup": 2
+            }
         }
     },
-    "hotstart":{
-        "start":1, 
-        "overrides":{
-            "time_to_run":22,
-            "spinup":2
+    "sample_space": {
+        "samples": "seeds/5_seeds.csv",
+        "from_bounds": {
+            "cwtropics": {
+                "min": 5,
+                "max": 80
+            },
+            "Bt_eq": {
+                "min": 0.001,
+                "max": 0.007
+            }
         }
-    }
+    },
 }
