@@ -23,16 +23,17 @@ DEFAULTS = {
 }
 
 
-def load_config_file(path: str, wave: int):
+def load_config_file(path: str, wave: Optional[int] = None):
     data = dict(DEFAULTS)
     with open(path, encoding="utf-8") as f:
         data.update(json.load(f))
-    data["wave"] = wave
-    if data.get("hotstart"):
-        if data["hotstart"].get("start", 0) <= wave:
-            # Override data
-            data["is_hotstart"] = True
-            data.update(data["hotstart"].get("overrides", {}))
+    if wave is not None:
+        data["wave"] = wave
+        if data.get("hotstart"):
+            if data["hotstart"].get("start", 0) <= wave:
+                # Override data
+                data["is_hotstart"] = True
+                data.update(data["hotstart"].get("overrides", {}))
     if data.get("verbose"):
         print(data)
     return data
@@ -47,7 +48,7 @@ def get_jobid_from_stdout(stdout: bytes):
 def model_run(
     basedir,
     nruns_per_wave,
-    time_to_run,
+    time_to_run=40,
     concurrency=20,
     hold=False,
     cpus=16,
@@ -62,7 +63,7 @@ def model_run(
             basedir,
             "--array",
             f"0-{nruns_per_wave-1}%{concurrency}",
-            ("-H " if hold else "") + "model_run.sh",
+            ("-H " if hold else "") + "slurm_scripts/model_run.sh",
             str(time_to_run),
         ],
         capture_output=True,
@@ -93,7 +94,7 @@ def hotstart_run(
             basedir,
             "--array",
             f"0-{nruns_per_wave-1}%{concurrency}",
-            ("-H " if hold else "") + "hot_start.sh",
+            ("-H " if hold else "") + "slurm_scripts/hot_start.sh",
             str(time_to_run),
             base_off,
         ],
@@ -125,6 +126,35 @@ def get_wave_base_dir(name, wave, **kwargs):
     if not os.path.exists(base):
         os.makedirs(base)
     return base
+
+
+def get_sample_space_from_config(sample_space: dict, **kwargs) -> SampleSpace:
+    """
+    Builds a sample space from the provided parsed config dictionary.
+    """
+    if "file" in sample_space:
+        calc_space = joblib.load(sample_space["file"])
+        if not isinstance(calc_space, SampleSpace):
+            raise ValueError(
+                "sample_space[file] does not correspond to a SampleSpace pickle."
+            )
+    if "from_bounds" in sample_space:
+        bounds = {k: (v["min"], v["max"]) for k, v in sample_space.items()}
+        calc_space = SampleSpace.from_bounds_dict(bounds)
+    if "xarray" in sample_space:
+        import xarray
+
+        with xarray.open_dataset(sample_space["xarray"]) as f:
+            calc_space = SampleSpace.from_xarray(f)
+
+    if "numpy" in sample_space:
+        import numpy as np
+
+        sample_space_np = np.load(sample_space["numpy"]["file"])
+        calc_space = SampleSpace.from_numpy(
+            sample_space_np, **sample_space_np["numpy"].get("coordinates", {})
+        )
+    return calc_space
 
 
 def get_exp_base_dir(name, **kwargs):
@@ -206,6 +236,33 @@ def qbo_merge_run(
     return jobid
 
 
+def uq_analysis_run(configfile, dependency_id, wave, **kwargs):
+    wave_base = get_wave_base_dir(wave=wave, **kwargs)
+    proc_status = subprocess.run(
+        [
+            "sbatch",
+            "--dependency",
+            f"afterok:{dependency_id}",
+            "--output",
+            f"{wave_base}/analysis.log",
+            "slurm_scripts/uq_analysis_run.sh",
+            configfile,
+            str(wave),
+        ],
+        capture_output=True,
+        check=True,
+    )
+    if proc_status.returncode == 0:
+        jobid = get_jobid_from_stdout(proc_status.stdout)
+        if kwargs.get("verbose"):
+            print(f"[DISPATCHED] Analysis job {jobid} dispatched")
+        return jobid
+    else:
+        raise RuntimeError(
+            f"Unable to dispatch analysis job with:{proc_status.stderr} ({proc_status.returncode})"
+        )
+
+
 def analysis_run(configfile, dependency_id, wave, **kwargs):
     wave_base = get_wave_base_dir(wave=wave, **kwargs)
     proc_status = subprocess.run(
@@ -215,7 +272,7 @@ def analysis_run(configfile, dependency_id, wave, **kwargs):
             f"afterok:{dependency_id}",
             "--output",
             f"{wave_base}/analysis.log",
-            "analysis_run.sh",
+            "slurm_scripts/analysis_run.sh",
             configfile,
             str(wave),
         ],
@@ -239,7 +296,7 @@ def next_wave_run(configfile, dependency_id, next_wave):
             "sbatch",
             "--dependency",
             f"afterok:{dependency_id}",
-            "run_wave.sh",
+            "slurm_scripts/run_wave.sh",
             configfile,
             str(next_wave),
         ],

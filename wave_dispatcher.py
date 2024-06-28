@@ -13,18 +13,23 @@ parser.add_argument(
     help="Force this wave to run regardless of config file status",
 )
 
-if __name__ == "__main__":
-    args = parser.parse_args()
-    config = dispatch_utils.load_config_file(args.configfile, wave=args.waveno)
+
+def wave_dispatch(configfile: str, waveno: int, force=False):
+    config = dispatch_utils.load_config_file(configfile, wave=waveno)
     wave_base = dispatch_utils.get_wave_base_dir(**config)
     template = dispatch_utils.get_template()
     samples = dispatch_utils.get_samples(**config)
+    if "history_matching" not in config:
+        raise KeyError(
+            "No history_matching key present within input configuration file. This is required for history matching tasks"
+        )
+    hm_config = config.pop("history_matching")
 
     ## CHECK IF THIS WAVE SHOULD EVEN BE RUN
     if (
-        args.waveno < config["waves"]
-        and dispatch_utils.check_unconverged(args.waveno, **config)
-    ) or args.force:
+        waveno < hm_config.get("waves")
+        and dispatch_utils.check_unconverged(waveno, **config, **hm_config)
+    ) or force:
         ## CONFIGURE FOR RUN
         for run, sample in samples.iterrows():
             run_dir = dispatch_utils.create_run_dirs(wave_base, run)
@@ -32,25 +37,36 @@ if __name__ == "__main__":
                 print(
                     f"[WRITTEN] namefile for {run} with parameters:{sample.to_dict()}"
                 )
-            dispatch_utils.write_namefile(run_dir, template, **sample)
+            dispatch_utils.write_namefile(run_dir, template, **sample, **hm_config)
 
         ### RUN WAVE
         if config.get("is_hotstart"):
-            base_off = dispatch_utils.get_lastwave_least_implausible(**config)
-            modelrun_id = dispatch_utils.hotstart_run(wave_base, base_off, **config)
+            base_off = dispatch_utils.get_lastwave_least_implausible(
+                **config, **hm_config
+            )
+            modelrun_id = dispatch_utils.hotstart_run(
+                wave_base, base_off, **config, **hm_config
+            )
         else:
-            modelrun_id = dispatch_utils.model_run(wave_base, **config)
+            modelrun_id = dispatch_utils.model_run(wave_base, **config, **hm_config)
         ### ANALYSIS
-        qbo_merge_id = dispatch_utils.qbo_merge_run(wave_base, modelrun_id, **config)
+        qbo_merge_id = dispatch_utils.qbo_merge_run(
+            wave_base, modelrun_id, **config, **hm_config
+        )
 
         analysis_id = dispatch_utils.analysis_run(
-            args.configfile, qbo_merge_id, **config
+            configfile, qbo_merge_id, **config, **hm_config
         )
 
         dispatch_utils.next_wave_run(
-            args.configfile,
+            configfile,
             analysis_id,
-            args.waveno + 1,
+            waveno + 1,
         )
     else:
         print("Finished...")
+
+
+if __name__ == "__main__":
+    args = parser.parse_args()
+    wave_dispatch(args.configfile, args.waveno, args.force)

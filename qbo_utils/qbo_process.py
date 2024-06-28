@@ -17,6 +17,7 @@ def get_signal_period_amplitude(
     interp = InterpolatedUnivariateSpline(
         np.arange(len(smoothed_signal)), smoothed_signal
     )
+
     roots = interp.roots()
     transitions = np.round(roots).astype(int)
     amplitudes = []

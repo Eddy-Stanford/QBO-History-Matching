@@ -1,0 +1,17 @@
+{
+    "name": "hm_50_uq_experiment",
+    "verbose": true,
+    "cpus": 16,
+    "concurrency": 20,
+    "random_state": 42,
+    "sample_space": {
+        "file": "/home/users/robcking/qbo_data/50/9.space"
+    },
+    "uq": {
+        "type": "history_matching",
+        "override": null,
+        "nruns": 100,
+        "spinup": 10,
+        "time_to_run": 50
+    }
+}

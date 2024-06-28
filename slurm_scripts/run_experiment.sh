@@ -17,4 +17,3 @@ source $SCRATCH/qbo_history_matching/$expname/env/bin/activate
 python -m pip install -r requirements.txt
 # Run dispatcher
 python experiment_init.py $expconfig 
-python wave_dispatcher.py $expconfig 0 >> ${expname}_wave_0.log
