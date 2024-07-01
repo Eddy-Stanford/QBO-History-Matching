@@ -15,7 +15,7 @@ def experiment_dispatch(config_file):
     space = dispatch_utils.get_sample_space_from_config(**config)
 
     ## DETERMINE TASK
-    os.makedirs(base)
+
     if "history_matching" in config:
         print("History Matching ")
         hm_config = config.pop("history_matching")
