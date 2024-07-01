@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
     ## EMULATOR
     emulator = Emulator(
-        n_features=2,
+        n_targets=2,
         kernel=ConstantKernel() * RBF(length_scale_bounds=(0.05, 1)) + WhiteKernel(),
         random_state=config.get("random_state", 42),
         n_restarts_optimizer=config.get("n_restarts_optimizer", 0),
