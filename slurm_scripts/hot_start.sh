@@ -4,6 +4,7 @@
 #SBATCH --mem=16G
 #SBATCH --partition=serc
 #SBATCH --output=%a.log
+#SBATCH -c 1
 #SBATCH --constraint=CPU_GEN:RME
 #SBATCH --mail-type=FAIL,TIME_LIMIT_90 
 set -e
