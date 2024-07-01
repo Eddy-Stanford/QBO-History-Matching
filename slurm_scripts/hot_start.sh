@@ -6,7 +6,7 @@
 #SBATCH --output=%a.log
 #SBATCH --constraint=CPU_GEN:RME
 #SBATCH --mail-type=FAIL,TIME_LIMIT_90 
-
+set -e
 iterations=$1 
 baseOff=$2
 #Copy files

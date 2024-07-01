@@ -5,6 +5,7 @@
 #SBATCH --mem=32G
 #SBATCH --partition=serc
 #SBATCH --mail-type=FAIL,TIME_LIMIT_90 
+set -e
 expconfig=$1
 waveno=$2
 module load python/3.12.1

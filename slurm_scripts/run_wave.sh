@@ -4,7 +4,7 @@
 #SBATCH --time=00:05:00
 #SBATCH --mem=1G
 #SBATCH --partition=serc
-
+set -e
 expconfig=$1
 module load python/3.12.1 
 expname=$(cat $expconfig | python3 -c "import sys;import json; print(json.load(sys.stdin)['name'])")

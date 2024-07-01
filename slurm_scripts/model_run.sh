@@ -6,7 +6,7 @@
 #SBATCH --output=%a.log
 #SBATCH --constraint=CPU_GEN:RME
 #SBATCH --mail-type=FAIL,TIME_LIMIT_90 
-
+set -e 
 iterations=$1
 printf -v idx "%02d" $SLURM_ARRAY_TASK_ID
 cd $idx
