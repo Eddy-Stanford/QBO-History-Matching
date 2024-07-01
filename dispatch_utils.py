@@ -241,7 +241,7 @@ def uq_analysis_run(configfile, dependency_id, **kwargs):
             f"afterok:{dependency_id}",
             "--output",
             f"{wave_base}/analysis.log",
-            "slurm_scripts/uq_analysis_run.sh",
+            "slurm_scripts/uq_analysis.sh",
             configfile,
         ],
         capture_output=True,
