@@ -231,8 +231,9 @@ def qbo_merge_run(
     return jobid
 
 
-def uq_analysis_run(configfile, dependency_id, wave, **kwargs):
-    wave_base = get_wave_base_dir(wave=wave, **kwargs)
+def uq_analysis_run(configfile, dependency_id, **kwargs):
+    base = get_exp_base_dir(**kwargs)
+    wave_base = os.path.join(base, "uq")
     proc_status = subprocess.run(
         [
             "sbatch",
@@ -242,7 +243,6 @@ def uq_analysis_run(configfile, dependency_id, wave, **kwargs):
             f"{wave_base}/analysis.log",
             "slurm_scripts/uq_analysis_run.sh",
             configfile,
-            str(wave),
         ],
         capture_output=True,
         check=True,
