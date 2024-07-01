@@ -1,8 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=experiment_dispatcher
 #SBATCH --nodes=1
-#SBATCH --time=00:10:00
+#SBATCH --time=00:15:00
 #SBATCH --mem=1G
+#SBATCH --cpus-per-node=8
 #SBATCH --partition=serc
 # Create run directory
 set -e 
