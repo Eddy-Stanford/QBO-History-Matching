@@ -18,7 +18,7 @@ def experiment_dispatch(config_file):
     os.makedirs(base)
     if "history_matching" in config:
         print("History Matching ")
-        hm_config = config["history_matching"]
+        hm_config = config.pop("history_matching")
         if "init_space_samples" in config.get("sample_space", {}).get("samples"):
             shutil.copy(
                 config["sample_space"]["samples"], os.path.join(base, "0_samples.csv")
