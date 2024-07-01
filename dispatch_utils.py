@@ -17,14 +17,9 @@ if "SLURM_JOBID" not in os.environ:
 
 INPUT_FILES = Path.home() / "MiMA" / "input"
 
-DEFAULTS = {
-    "spinup": 0,
-    "time_to_run": 20,
-}
-
 
 def load_config_file(path: str, wave: Optional[int] = None):
-    data = dict(DEFAULTS)
+    data = dict()
     with open(path, encoding="utf-8") as f:
         data.update(json.load(f))
     if wave is not None:
