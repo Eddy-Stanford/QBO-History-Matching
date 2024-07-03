@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=mimarunforyears
-#SBATCH --mem=16G
+#SBATCH --mem=32G
 #SBATCH --time=56:00:00
 #SBATCH --partition=serc
 #SBATCH --output=%a.log
