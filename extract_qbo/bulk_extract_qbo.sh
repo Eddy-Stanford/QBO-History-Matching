@@ -1,5 +1,5 @@
 #! /bin/bash
-#SBATCH --mem-per-cpu=16G
+#SBATCH --mem-per-cpu=24G
 #SBATCH --partition=serc
 #SBATCH --time=01:00:00
 #SBATCH -n 10
@@ -13,7 +13,7 @@ for i in {0..9}; do
     if [ -d $1/$idx ]
     then
         echo "working on " $1/$idx
-        python extract_qbo/extract_qbo.py $1/$idx $2 $3 --output-name "${idx}_QBO_${2}_${3}.nc" --latitude_range=5 &
+        srun -N 1 -n 1 python extract_qbo/extract_qbo.py $1/$idx $2 $3 --output-name "${idx}_QBO_${2}_${3}.nc" --latitude_range=5 &
     fi
 done
 wait
