@@ -31,6 +31,7 @@ if __name__ == "__main__":
         path = os.path.join(
             exp_base,
             wave_base,
+            str(i).zfill(2),
             f"{str(i).zfill(2)}_QBO_{uq_config['spinup']}_{uq_config['time_to_run']}.nc",
         )
         with xr.open_dataset(path) as ds:
