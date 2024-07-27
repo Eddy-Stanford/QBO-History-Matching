@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("configfile", type=str)
 
 
-if __name__ == "main__":
+if __name__ == "__main__":
     args = parser.parse_args()
     config = dispatch_utils.load_config_file(args.configfile)
     wave_base = "uq"
