@@ -24,8 +24,8 @@ if __name__ == "__main__":
     os.makedirs(os.path.join(exp_base, wave_base, "analysis"), exist_ok=False)
     means = []
     sems = []
-    periods = []
-    ampltiudes = []
+    periods_points = []
+    amplitudes_points = []
 
     for i in range(uq_config["nruns"]):
         path = os.path.join(
@@ -58,8 +58,8 @@ if __name__ == "__main__":
 
             means.append([mean_period, mean_amplitude])
             sems.append([sem_period, sem_amplitude])
-            periods.extend(periods)
-            amplitudes.extend(amplitudes)
+            periods_points.extend(periods)
+            amplitudes_points.extend(amplitudes)
     means = np.array(means)
     sems = np.array(sems)
     periods = np.array(periods)
@@ -68,8 +68,13 @@ if __name__ == "__main__":
     ## DUMP FILES
     np.save(os.path.join(exp_base, wave_base, "analysis", "means.npy"), means)
     np.save(os.path.join(exp_base, wave_base, "analysis", "sems.npy"), sems)
-    np.save(os.path.join(exp_base, wave_base, "analysis", "periods.npy"), periods)
-    np.save(os.path.join(exp_base, wave_base, "analysis", "amplitudes.npy"), amplitudes)
+    np.save(
+        os.path.join(exp_base, wave_base, "analysis", "periods.npy"), periods_points
+    )
+    np.save(
+        os.path.join(exp_base, wave_base, "analysis", "amplitudes.npy"),
+        amplitudes_points,
+    )
 
     ## PLOT HISTOGRAM
     plt.figure()
