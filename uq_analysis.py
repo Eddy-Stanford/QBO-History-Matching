@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
             periods, amplitudes = get_signal_period_amplitude(
                 u,
-                smoothed_avg_months=config.get("months_to_smooth", 5),
+                smoothed_avg_months=uq_config.get("months_to_smooth", 5),
                 points_per_month=30,
             )
             if config.get("verbose"):
