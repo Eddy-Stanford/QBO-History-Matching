@@ -51,8 +51,8 @@ def uq_dispatch(configfile):
         dispatch_utils.write_namefile(
             run_dir,
             template,  # TODO: allow 4xCO2 override
-            cwtropics=samples[0],
-            Bt_eq=samples[1],
+            cwtropics=sample[0],
+            Bt_eq=sample[1],
         )
     ## Dispatch Runs
     modelrun_id = dispatch_utils.model_run(
