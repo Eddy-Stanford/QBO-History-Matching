@@ -59,7 +59,7 @@ def draw_ces_samples_uniform_prior(
 
 def get_ad99_ces(
     eki_exp_dir,
-    sample_space,
+    space,
     delta,
     nruns,
     eki_up_to_wave=None,
@@ -107,9 +107,7 @@ def get_ad99_ces(
         random_state=random_state,
     )
     em.fit(X, y, y_err=y_err)
-    pred, predstd = em.predict_over_space(
-        sample_space, return_std=True, resolution=1000
-    )
+    pred, predstd = em.predict_over_space(space, return_std=True, resolution=1000)
     period, perioderr, amplitude, amplituderr = get_reference_qbo(
         fetch_qbo_file(local_path=os.path.join(exp_base, "qbo.dat"))
     )
@@ -123,14 +121,14 @@ def get_ad99_ces(
             dim="n_features"
         )
     )
-    coord_min = [v[0] for v in sample_space.bounds_dict.values()]
-    coord_max = [v[1] for v in sample_space.bounds_dict.values()]
+    coord_min = [v[0] for v in space.bounds_dict.values()]
+    coord_max = [v[1] for v in space.bounds_dict.values()]
 
     ces = draw_ces_samples_uniform_prior(
         liklihood,
         coord_min=coord_min,
         coord_max=coord_max,
-        coord_names=sample_space.coord_labels,
+        coord_names=space.coord_labels,
         N=nruns + burn_in,
         burn_in=burn_in,
         delta=delta,
