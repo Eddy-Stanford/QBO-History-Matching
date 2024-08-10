@@ -134,7 +134,9 @@ def get_sample_space_from_config(sample_space: dict, **kwargs) -> SampleSpace:
                 "sample_space[file] does not correspond to a SampleSpace pickle."
             )
     if "from_bounds" in sample_space:
-        bounds = {k: (v["min"], v["max"]) for k, v in sample_space.items()}
+        bounds = {
+            k: (v["min"], v["max"]) for k, v in sample_space["from_bounds"].items()
+        }
         calc_space = SampleSpace.from_bounds_dict(bounds)
     if "xarray" in sample_space:
         import xarray
