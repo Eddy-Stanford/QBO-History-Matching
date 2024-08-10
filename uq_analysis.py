@@ -62,8 +62,8 @@ if __name__ == "__main__":
             amplitudes_points.extend(amplitudes)
     means = np.array(means)
     sems = np.array(sems)
-    periods = np.array(periods)
-    amplitudes = np.array(amplitudes)
+    periods_points = np.array(periods_points)
+    amplitudes_points = np.array(amplitudes_points)
 
     ## DUMP FILES
     np.save(os.path.join(exp_base, wave_base, "analysis", "means.npy"), means)
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     plt.savefig(os.path.join(exp_base, wave_base, "analysis", "mean_histogram.png"))
 
     plt.figure()
-    plt.scatter(periods, amplitudes)
+    plt.scatter(periods_points, amplitudes_points)
     plt.xlabel("Periods (months)")
     plt.ylabel("Amplitude (m/s)")
     plt.savefig(
