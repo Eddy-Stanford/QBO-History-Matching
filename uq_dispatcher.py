@@ -34,7 +34,7 @@ def uq_dispatch(configfile):
     elif uq_config.get("type", "history_matching") == "eki":
         if "random_state" in config:
             np.random.seed(config["random_state"])
-        samples = ces.get_ad99_ces(uq_config["eki_exp_dir"], space, **uq_config)
+        samples = ces.get_ad99_ces(space=space, **uq_config)
     else:
         raise ValueError(
             f"Unknown UQ type:{uq_config['type']}, must be one of `eki` or `history_matching` "
