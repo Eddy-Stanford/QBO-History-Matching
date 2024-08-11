@@ -126,8 +126,8 @@ def get_ad99_ces(
 
     ces = draw_ces_samples_uniform_prior(
         liklihood,
-        coord_min=coord_min,
-        coord_max=coord_max,
+        coord_min=np.array(coord_min),
+        coord_max=np.array(coord_max),
         coord_names=space.coord_labels,
         N=nruns + burn_in,
         burn_in=burn_in,
