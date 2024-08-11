@@ -1,7 +1,7 @@
 {
     "name": "hm_50_uq_experiment",
     "verbose": true,
-    "cpus": 16,
+    "cpus": 32,
     "concurrency": 20,
     "random_state": 42,
     "sample_space": {
