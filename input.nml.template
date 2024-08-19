@@ -45,7 +45,11 @@
 
  &rrtm_radiation_nml
      h2o_lower_limit        = 2.e-07,
+     {% if co2ppmv %}
+     co2ppmv                = {{co2ppmv}},
+     {% else %}
      co2ppmv                = 390.,
+     {% endif %}
      do_read_ozone          = .true.,
      ozone_file             = 'ozone_1990',
      dt_rad_avg             =  4500,

@@ -19,6 +19,20 @@ INPUT_FILES = Path.home() / "MiMA" / "input"
 
 
 def load_config_file(path: str, wave: Optional[int] = None):
+    """
+    Load and parse a configuration file in JSON format.
+
+    Parameters:
+    - path (str): The path to the configuration file.
+    - wave (Optional[int]): The wave number to be included in the configuration data. If provided, it will be added to the data. If the configuration contains hotstart settings and the wave number is greater than or equal to the hotstart start value, the hotstart overrides will be applied.
+
+    Returns:
+    - dict: The parsed configuration data with optional wave and hotstart overrides applied.
+
+    Raises:
+    - FileNotFoundError: If the specified file does not exist.
+    - json.JSONDecodeError: If the file content is not valid JSON.
+    """
     data = dict()
     with open(path, encoding="utf-8") as f:
         data.update(json.load(f))
@@ -49,6 +63,21 @@ def model_run(
     cpus=16,
     **kwargs,
 ):
+    """
+    Submit a batch job to run a model using SLURM.
+
+    Parameters:
+    - basedir (str): The base directory where the job will be executed.
+    - nruns_per_wave (int): The number of runs per wave.
+    - time_to_run (int, optional): The time to run the job in minutes. Default is 40.
+    - concurrency (int, optional): The maximum number of concurrent jobs. Default is 20.
+    - hold (bool, optional): Whether to hold the job. Default is False.
+    - cpus (int, optional): The number of CPUs to allocate for the job. Default is 16.
+    - kwargs (Any): Additional keyword arguments.
+
+    Returns:
+    - subprocess.CompletedProcess: The result of the subprocess.run call.
+    """
     proc_status = subprocess.run(
         [
             "sbatch",

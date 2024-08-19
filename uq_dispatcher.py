@@ -53,6 +53,7 @@ def uq_dispatch(configfile):
             template,  # TODO: allow 4xCO2 override
             cwtropics=sample[0],
             Bt_eq=sample[1],
+            co2ppmv=uq_config.get("co2ppmv"),
         )
     ## Dispatch Runs
     modelrun_id = dispatch_utils.model_run(
