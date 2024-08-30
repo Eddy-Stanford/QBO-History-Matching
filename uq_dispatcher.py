@@ -50,7 +50,7 @@ def uq_dispatch(configfile):
             print(f"[WRITTEN] namefile for {run} with parameters:{sample}")
         dispatch_utils.write_namefile(
             run_dir,
-            template,  # TODO: allow 4xCO2 override
+            template,
             cwtropics=sample[0],
             Bt_eq=sample[1],
             co2ppmv=uq_config.get("co2ppmv"),
