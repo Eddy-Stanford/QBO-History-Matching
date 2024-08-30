@@ -71,4 +71,4 @@ def uq_dispatch(configfile):
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    uq_dispatch(parser.configfile)
+    uq_dispatch(args.configfile)
