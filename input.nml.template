@@ -45,7 +45,7 @@
 
  &rrtm_radiation_nml
      h2o_lower_limit        = 2.e-07,
-     {% if co2ppmv %}
+     {% if co2ppmv is defined %}
      co2ppmv                = {{co2ppmv}},
      {% else %}
      co2ppmv                = 390.,
