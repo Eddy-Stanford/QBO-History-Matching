@@ -92,7 +92,6 @@ def model_run(
         ],
         capture_output=True,
         check=True,
-        env={},
     )
     jobid = get_jobid_from_stdout(proc_status.stdout)
     if kwargs.get("verbose"):
@@ -125,7 +124,6 @@ def hotstart_run(
         ],
         capture_output=True,
         check=True,
-        env={},
     )
     jobid = get_jobid_from_stdout(proc_status.stdout)
     if kwargs.get("verbose"):
