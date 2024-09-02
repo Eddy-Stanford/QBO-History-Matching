@@ -6,7 +6,7 @@
 #SBATCH -c 8
 #SBATCH --partition=serc
 # Create run directory
-set -e 
+set -e
 expconfig=$1
 module load python/3.12.1
 expname=$(cat $expconfig | python3 -c "import sys;import json; print(json.load(sys.stdin)['name'])")
@@ -18,4 +18,5 @@ python3 -m venv $SCRATCH/qbo_history_matching/$expname/env
 source $SCRATCH/qbo_history_matching/$expname/env/bin/activate
 python -m pip install -r requirements.txt
 # Run dispatcher
-python experiment_init.py $expconfig 
+unset SLURM_MEM_PER_NODE
+python experiment_init.py $expconfig

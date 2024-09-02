@@ -6,7 +6,8 @@
 #SBATCH --partition=serc
 set -e
 expconfig=$1
-module load python/3.12.1 
+module load python/3.12.1
 expname=$(cat $expconfig | python3 -c "import sys;import json; print(json.load(sys.stdin)['name'])")
-source $SCRATCH/qbo_history_matching/$expname/env/bin/activate 
+source $SCRATCH/qbo_history_matching/$expname/env/bin/activate
+unset SLURM_MEM_PER_NODE
 python3 wave_dispatcher.py "$@" >> $SCRATCH/qbo_history_matching/$expname/${expname}_wave_${2}.log
