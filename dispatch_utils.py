@@ -54,6 +54,14 @@ def get_jobid_from_stdout(stdout: bytes):
         return int(match[0])
 
 
+def clean_env():
+    """
+    Return an environment free from any SLURM-related variables from this current environment.
+    This is needed to prevent any conflicts
+    """
+    return {k: v for k, v in os.environ.items() if not k.startswith("SLURM")}
+
+
 def model_run(
     basedir,
     nruns_per_wave,
@@ -92,6 +100,7 @@ def model_run(
         ],
         capture_output=True,
         check=True,
+        env=clean_env(),
     )
     jobid = get_jobid_from_stdout(proc_status.stdout)
     if kwargs.get("verbose"):
@@ -124,6 +133,7 @@ def hotstart_run(
         ],
         capture_output=True,
         check=True,
+        env=clean_env(),
     )
     jobid = get_jobid_from_stdout(proc_status.stdout)
     if kwargs.get("verbose"):
@@ -255,6 +265,7 @@ def qbo_merge_run(
         ],
         capture_output=True,
         check=True,
+        env=clean_env(),
     )
     jobid = get_jobid_from_stdout(proc_status.stdout)
     if kwargs.get("verbose"):
@@ -277,6 +288,7 @@ def uq_analysis_run(configfile, dependency_id, **kwargs):
         ],
         capture_output=True,
         check=True,
+        env=clean_env(),
     )
     if proc_status.returncode == 0:
         jobid = get_jobid_from_stdout(proc_status.stdout)
@@ -304,6 +316,7 @@ def analysis_run(configfile, dependency_id, wave, **kwargs):
         ],
         capture_output=True,
         check=True,
+        env=clean_env(),
     )
     if proc_status.returncode == 0:
         jobid = get_jobid_from_stdout(proc_status.stdout)
@@ -328,6 +341,7 @@ def next_wave_run(configfile, dependency_id, next_wave):
         ],
         capture_output=True,
         check=True,
+        env=clean_env(),
     )
     jobid = get_jobid_from_stdout(proc_status.stdout)
     return jobid
