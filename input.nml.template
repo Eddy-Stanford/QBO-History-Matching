@@ -9,11 +9,11 @@
     damping_option          = 'resolution_dependent',
     damping_order           = 4,
     do_mass_correction      =.true.,
-    do_energy_correction    =.true.,
-    do_water_correction     =.true.,
+    do_energy_correction    =.true., 
+    do_water_correction     =.true.,  
     water_correction_limit  = 200.e2,
-    initial_sphum           = 2.e-06,
-    use_virtual_temperature =.false.,
+    initial_sphum           = 2.e-06,  
+    use_virtual_temperature =.false., 
     vert_advect_uv          = 'second_centered',
     vert_advect_t           = 'second_centered',
     use_implicit            = .true.,
@@ -39,13 +39,13 @@
 # Empty namelist causes all values to take on default values.
 
  &spectral_init_cond_nml
-    initial_temperature = 260. /
+    initial_temperature = 264. /
 
 ---------- physics namelists --------------
 
  &rrtm_radiation_nml
      h2o_lower_limit        = 2.e-07,
-     {% if co2ppmv is defined %}
+     {% if co2ppmv is defined and co2ppmv is not none %}
      co2ppmv                = {{co2ppmv}},
      {% else %}
      co2ppmv                = 390.,
@@ -78,22 +78,22 @@
      do_warmpool = .true.,
      roughness_choice = 4,
      mom_roughness_land = 5.e3,
-     q_roughness_land = 1.e-12  /
+     q_roughness_land = 1.e-12  /   
 
 &qflux_nml
      qflux_amp        = 26.,
       warmpool_localization_choice = 3,
-     warmpool_k       = 1.66666,
-     warmpool_amp     = 18.,
+     warmpool_k       = 1.66666, 
+     warmpool_amp     = 18., 
      warmpool_width   = 35.,
      qflux_width      = 16.,
      warmpool_phase   = 140.,
      warmpool_centr   = 0.,
-     gulf_k       = 4.0,
-      gulf_amp     = 70.,
+     gulf_k       = 4, 
+      gulf_amp     = 70., 
      kuroshio_amp = 40.,
      trop_atlantic_amp = 50.,
-     gulf_phase   = 310.,
+     gulf_phase   = 310., 
      Hawaiiextra = 30.0,
       Pac_ITCZextra = -0.0,
      north_sea_heat =0.0/
@@ -103,16 +103,16 @@
      trayfric      = -0.5,
      sponge_pbottom=  50.,
      do_conserve_energy = .true.,
-     do_cg_drag    = .true.,
+     do_cg_drag    = .true., 
      do_mg_drag = .false./
 
 &topography_nml
-        topog_file = 'INPUT/navy_topography.data.nc',
-        water_file = 'INPUT/navy_pctwater.data.nc' /
+	topog_file = 'INPUT/navy_topography.data.nc', 
+	water_file = 'INPUT/navy_pctwater.data.nc' /
 
-
+            
  &cg_drag_nml
-     Bt_0  = 0.0043,
+     Bt_0  = 0.0043,  
      Bt_nh = 0.00,
      Bt_eq = {{Bt_eq}},
      Bt_sh = 0.00,
@@ -126,7 +126,7 @@
      cw = 35.0,
      cwtropics = {{cwtropics}},
      cn =  2.0,
-    kelvin_kludge = 1.0,
+     kelvin_kludge = 1.0,
      weighttop = 0.7,
      weightminus1 = 0.28,
      weightminus2 = 0.02,
@@ -135,12 +135,12 @@
      cg_drag_freq = 21600 /
 
  &moist_processes_nml
-     do_bm           =.true.,
-     do_bmmass       =.false.,
+     do_bm           =.true.,   
+     do_bmmass       =.false., 
      do_bmomp        =.false.,
      do_mca          =.false.,
      do_lsc          =.true.,
-     do_strat        =.false.,
+     do_strat        =.false., 
      do_ras          =.false.,
      do_diag_clouds  =.false.,
      do_rh_clouds    =.false.,
@@ -148,13 +148,13 @@
 
  &betts_miller_nml
        tau_bm = 7200.,
-       rhbm   = .7   ,
-       do_simp = .false.,
-       do_shallower = .true.,
+       rhbm   = .7   , 
+       do_simp = .false., 
+       do_shallower = .true., 
        do_changeqref = .false.,
-       do_envsat = .false.,
-       do_taucape = .false.,
-       capetaubm = 900.,
+       do_envsat = .false., 
+       do_taucape = .false., 
+       capetaubm = 900., 
        tau_min = 2400./
 
 &moist_conv_nml
@@ -166,14 +166,13 @@
        drag_min   = 4.e-05 /
 
 
-
  &lscale_cond_nml
        do_evap = .true.,
        use_df_stuff = .true. /
 
  &vert_diff_driver_nml
         do_conserve_energy = .true.,
-        use_virtual_temp_vert_diff = .false. /
+	use_virtual_temp_vert_diff = .false. /
 
 
 
@@ -195,7 +194,7 @@
     constant_gust    = 0.,
     do_mellor_yamada = .false.,
     do_shallow_conv  = .false.,
-    use_df_stuff = .true.,
+    use_df_stuff = .true., 
     do_diffusivity = .true./
 
  &ocean_rough_nml
