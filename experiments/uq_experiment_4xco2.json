@@ -1,5 +1,5 @@
 {
-    "name": "hm_50_uq_experiment",
+    "name": "hm_50_uq_experiment_4xco2",
     "verbose": true,
     "cpus": 16,
     "concurrency": 30,
@@ -12,6 +12,7 @@
         "override": null,
         "nruns": 30,
         "spinup": 10,
+	    "co2ppmv":1560.0,
         "time_to_run": 50
     }
 }

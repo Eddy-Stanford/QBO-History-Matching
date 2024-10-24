@@ -1,0 +1,29 @@
+{
+    "name": "eki_50_uq_experiment_4xco2",
+    "verbose": true,
+    "cpus": 32,
+    "concurrency": 25,
+    "random_state": 42,
+    "sample_space": {
+        "from_bounds": {
+            "cwtropics": {
+                "min": 5,
+                "max": 80
+            },
+            "Bt_eq": {
+                "min": 0.001,
+                "max": 0.007
+            }
+        }
+    },
+    "uq": {
+        "type": "eki",
+        "eki_exp_dir": "/scratch/users/robcking/EKI_N50_outputs/",
+        "override": null,
+        "nruns": 100,
+        "delta": 0.12,
+        "spinup": 10,
+        "time_to_run": 50,
+	"co2ppmv":1560
+    }
+}
