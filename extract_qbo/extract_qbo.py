@@ -2,7 +2,7 @@
 import argparse
 import os
 from typing import List
-
+from glob import glob 
 import numpy as np
 import xarray as xr
 
@@ -36,13 +36,16 @@ if __name__ == "__main__":
     parser.add_argument("--latitude_range", default=5, type=float)
 
     args = parser.parse_args()
-
+    
+    year_to = min(args.year_to,len(glob(os.path.join(args.wd,'atmos_daily_*.nc'))))
+    if year_to != args.year_to:
+        print(f"WARNING: Files not complete until `year to`:{args.year_to}, changing to using {year_to} years")
     if not args.output_name:
-        args.output_name = f"qbo_{args.year_from}_{args.year_to}.nc"
+        args.output_name = f"qbo_{args.year_from}_{year_to}.nc"
 
     paths = [
         os.path.join(args.wd, f"atmos_daily_{i}.nc")
-        for i in range(args.year_from, args.year_to)
+        for i in range(args.year_from, year_to)
     ]
     qbo = concat_and_weight_qbo(paths, args.latitude_range)
     qbo.to_netcdf(os.path.join(args.wd, args.output_name))
