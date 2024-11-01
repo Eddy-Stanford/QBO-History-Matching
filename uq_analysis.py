@@ -8,7 +8,7 @@ from scipy.stats import sem
 
 import dispatch_utils
 from qbo_utils.qbo_process import get_signal_period_amplitude
-
+from glob import glob 
 parser = argparse.ArgumentParser()
 parser.add_argument("configfile", type=str)
 
@@ -28,12 +28,12 @@ if __name__ == "__main__":
     amplitudes_points = []
 
     for i in range(uq_config["nruns"]):
-        path = os.path.join(
+        path = glob(os.path.join(
             exp_base,
             wave_base,
             str(i).zfill(2),
-            f"{str(i).zfill(2)}_QBO_{uq_config['spinup']}_{uq_config['time_to_run']}.nc",
-        )
+            f"{str(i).zfill(2)}_QBO_{uq_config['spinup']}_*.nc",
+        ))[0]
         with xr.open_dataset(path) as ds:
             u = ds.ucomp.sel(pfull=10, method="nearest")
             if config.get("verbose"):

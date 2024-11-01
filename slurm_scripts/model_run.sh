@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=mimarunforyears
 #SBATCH --mem-per-cpu=1G
-#SBATCH --time=40:00:00
+#SBATCH --time=48:00:00
 #SBATCH --partition=serc
 #SBATCH --output=%a.log
 #SBATCH -c 1
