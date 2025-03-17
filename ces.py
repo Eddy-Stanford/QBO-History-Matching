@@ -129,8 +129,8 @@ def get_ad99_ces(
         coord_min=np.array(coord_min),
         coord_max=np.array(coord_max),
         coord_names=space.coord_labels,
-        N=nruns + burn_in,
+        N=100 * nruns + burn_in,
         burn_in=burn_in,
         delta=delta,
     )
-    return ces
+    return ces[::100]
