@@ -95,7 +95,7 @@ def model_run(
             basedir,
             "--array",
             f"0-{nruns_per_wave-1}%{concurrency}",
-            ("-H " if hold else "") + "slurm_scripts/model_run.sh",
+            ("-H " if hold else "") + "slurm_scripts/model_run_sh4.sh",
             str(time_to_run),
         ],
         capture_output=True,
