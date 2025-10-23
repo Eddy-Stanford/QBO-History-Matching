@@ -6,7 +6,7 @@
 #SBATCH --partition=serc
 set -e
 expconfig=$1
-conda init
+source ~/.bashrc
 conda activate qbo_history_matching
 unset SLURM_MEM_PER_NODE
 expname=$(cat $expconfig | python3 -c "import sys;import json; print(json.load(sys.stdin)['name'])")

@@ -8,7 +8,7 @@
 # Create run directory
 set -e
 expconfig=$1
-conda init
+source ~/.bashrc
 conda activate qbo_history_matching
 expname=$(cat $expconfig | python3 -c "import sys;import json; print(json.load(sys.stdin)['name'])")
 mkdir -p $SCRATCH/qbo_history_matching/$expname

@@ -8,7 +8,7 @@
 set -e
 expconfig=$1
 waveno=$2
-conda init
+source ~/.bashrc
 conda activate qbo_history_matching
 python analysis.py $expconfig $waveno
 
