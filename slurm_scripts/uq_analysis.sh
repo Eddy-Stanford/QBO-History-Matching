@@ -8,6 +8,7 @@
 set -e
 expconfig=$1
 module load python/3.12.1
+module load netcdf-c
 spack env activate mima_sh3
 expname=$(cat $expconfig | python3 -c "import sys;import json; print(json.load(sys.stdin)['name'])")
 source $SCRATCH/qbo_history_matching/$expname/env/bin/activate
