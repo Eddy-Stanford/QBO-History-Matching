@@ -6,6 +6,7 @@
 #SBATCH --partition=serc
 set -e
 expconfig=$1
+conda init
 conda activate qbo_history_matching
 unset SLURM_MEM_PER_NODE
 python3 wave_dispatcher.py "$@" >> $SCRATCH/qbo_history_matching/$expname/${expname}_wave_${2}.log

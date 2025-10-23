@@ -7,6 +7,7 @@
 #SBATCH --mail-type=FAIL,TIME_LIMIT_90
 set -e
 expconfig=$1
+conda init
 conda activate qbo_history_matching
 python uq_analysis.py $expconfig
 
