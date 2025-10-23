@@ -15,8 +15,6 @@ cd $idx
 spacktivate mima_sh4
 
 echo "Running for " $iterations " years"
-mimaexec="${MIMAPATH:-/home/groups/aditis2/robcking/mima.sh4.x}"
-# mimacontainer="${MIMAPATH:-/home/groups/aditis2/robcking/mima.sif}"
 
 for ((i=1;i<=$iterations;i++))
 do
@@ -25,7 +23,7 @@ do
     for j in {1..5}
     do
         echo "attempt ${j}"
-        srun --ntasks $SLURM_NTASKS $mimaexec && break || sleep 15;
+        srun --ntasks $SLURM_NTASKS mima && break || sleep 15;
     done
     mppnccombine -r atmos_daily_${i}.nc atmos_daily.nc.????
     
