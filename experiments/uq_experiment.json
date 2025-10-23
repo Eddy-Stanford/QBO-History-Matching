@@ -1,7 +1,7 @@
 {
     "name": "hm_50_uq_experiment",
     "verbose": true,
-    "cpus": 16,
+    "cpus": 32,
     "concurrency": 30,
     "random_state": 42,
     "sample_space": {
@@ -10,8 +10,8 @@
     "uq": {
         "type": "history_matching",
         "override": null,
-        "nruns": 30,
+        "nruns": 50,
         "spinup": 10,
-        "time_to_run": 50
+        "time_to_run": 30
     }
 }

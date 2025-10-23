@@ -18,11 +18,11 @@
     },
     "uq": {
         "type": "eki",
-        "eki_exp_dir": "/home/user/robcking/EKI_N50/",
+        "eki_exp_dir": "/home/users/robcking/EKI_N50/",
         "override": null,
         "nruns": 100,
         "delta": 0.12,
         "spinup": 10,
-        "time_to_run": 50
+        "time_to_run": 30
     }
 }
