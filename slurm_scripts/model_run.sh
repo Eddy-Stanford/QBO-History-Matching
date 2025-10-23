@@ -12,7 +12,7 @@ iterations=$1
 printf -v idx "%02d" $SLURM_ARRAY_TASK_ID
 cd $idx
 
-spacktivate mima_sh4
+spack env activate mima_sh4
 
 echo "Running for " $iterations " years"
 for ((i=1;i<=$iterations;i++))

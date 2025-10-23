@@ -18,7 +18,7 @@ cp $baseOff/RESTART/*res* INPUT/
 echo "Hot start running for " $iterations " years"
 #
 
-spacktivate mima_sh4
+spack env activate mima_sh4
 
 for ((i=1;i<=$iterations;i++))
 do
