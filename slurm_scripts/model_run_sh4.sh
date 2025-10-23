@@ -6,16 +6,16 @@
 #SBATCH --output=%a.log
 #SBATCH -c 1
 #SBATCH --mail-type=FAIL,TIME_LIMIT_90
-#SBATCH --constraint CPU_MNF:AMD
+#SBATCH --constraint CPU_GEN:GEN
 set -e
 iterations=$1
 printf -v idx "%02d" $SLURM_ARRAY_TASK_ID
 cd $idx
 
-spacktivate mima_sh3
+spacktivate mima_sh4
 
 echo "Running for " $iterations " years"
-mimaexec="${MIMAPATH:-/home/groups/aditis2/robcking/mima.sh3.x}"
+mimaexec="${MIMAPATH:-/home/groups/aditis2/robcking/mima.sh4.x}"
 # mimacontainer="${MIMAPATH:-/home/groups/aditis2/robcking/mima.sif}"
 
 for ((i=1;i<=$iterations;i++))
