@@ -10,6 +10,7 @@ set -e
 expconfig=$1
 conda init
 conda activate qbo_history_matching
+mkdir -p $SCRATCH/qbo_history_matching/$expname
 # Run dispatcher
 unset SLURM_MEM_PER_NODE
 python experiment_init.py $expconfig
