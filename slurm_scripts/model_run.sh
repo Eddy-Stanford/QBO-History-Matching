@@ -11,7 +11,7 @@ set -e
 iterations=$1
 printf -v idx "%02d" $SLURM_ARRAY_TASK_ID
 cd $idx
-
+source ~/.bashrc
 spack env activate mima_sh4
 
 echo "Running for " $iterations " years"
