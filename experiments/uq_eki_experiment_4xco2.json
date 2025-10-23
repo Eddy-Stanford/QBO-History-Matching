@@ -18,12 +18,12 @@
     },
     "uq": {
         "type": "eki",
-        "eki_exp_dir": "/scratch/users/robcking/EKI_N50_outputs/",
+        "eki_exp_dir": "/home/user/robcking/EKI_N50/",
         "override": null,
         "nruns": 100,
         "delta": 0.12,
         "spinup": 10,
         "time_to_run": 50,
-	"co2ppmv":1560
+        "co2ppmv": 1560
     }
 }
