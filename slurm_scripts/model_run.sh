@@ -13,7 +13,7 @@ printf -v idx "%02d" $SLURM_ARRAY_TASK_ID
 cd $idx
 source ~/.bashrc
 spack env activate mima_sh4
-
+ulimit -s unlimited
 echo "Running for " $iterations " years"
 for ((i=1;i<=$iterations;i++))
 do
